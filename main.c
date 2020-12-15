@@ -2,7 +2,16 @@
 #include "map.c"
 #include "player.c"
 #include "raycaste.c"
-// #include "texture.c"
+#include "texture.c"
+#include "sprit.c"
+// #include "sprite.c"
+// #include "sprite_util.c"
+
+int close_win(t_data *t)
+{
+	exit(0);
+	return (0);
+}
 
 int main()
 {
@@ -11,17 +20,21 @@ int main()
 
 	t.mlx.mlx_ptr = mlx_init();
 	t.mlx.win_ptr = mlx_new_window(t.mlx.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "one");
-	t.txt.load_img = mlx_new_image(t.mlx.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	t.txt.load_data = (int *)mlx_get_data_addr(t.txt.load_img, &t.txt.bits_per_pixel,
-	&t.txt.size_line, &t.txt.endian);
-	t.txt.img = mlx_xpm_file_to_image(t.mlx.mlx_ptr, "image/wall.xpm", &t.txt.width, &t.txt.height);
-	t.txt.data = (int *)mlx_get_data_addr(t.txt.img, &t.txt.bits_per_pixel,
-										   &t.txt.size_line, &t.txt.endian);
+	t.load_img = mlx_new_image(t.mlx.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	t.load_data = (int *)mlx_get_data_addr(t.load_img, &t.txt[0].bits_per_pixel,
+												  &t.txt[0].size_line, &t.txt[0].endian);
+	main_texture(&t);
+
+	/* t.txt[0].img = mlx_xpm_file_to_image(t.mlx.mlx_ptr, "image/wall.XPM", &t.txt[0].width,
+										 &t.txt[0].height);
+	t.txt[0].data = (int *)mlx_get_data_addr(t.txt[0].img, &t.txt[0].bits_per_pixel,
+											 &t.txt[0].size_line, &t.txt[0].endian); */
+
 	Draw(&t);
-	mlx_put_image_to_window(t.mlx.mlx_ptr, t.mlx.win_ptr, t.txt.load_img, 0, 0);
 	mlx_hook(t.mlx.win_ptr, 2, (1L << 0), keyPressed, &t);
 	mlx_hook(t.mlx.win_ptr, 3, (1L >> 0), keyRealease, &t);
-	// mlx_loop_hook(t.mlx.mlx_ptr, Draw, &t);
+	mlx_hook(t.mlx.win_ptr, 17, 1L << 5, &close_win, &t);
+	mlx_loop_hook(t.mlx.mlx_ptr, Draw, &t);
 	mlx_loop(t.mlx.mlx_ptr);
 	return (0);
 }

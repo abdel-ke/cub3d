@@ -1,1 +1,0 @@
-gcc tst.c map.c player.c -lmlx -framework OpenGl -framework AppKit ;./a.out
