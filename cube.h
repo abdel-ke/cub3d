@@ -8,7 +8,7 @@
 
 #define TSTA 1000
 #define TSTB 800
-#define TILE_SIZE 96
+#define TILE_SIZE 64
 #define MAP_NUM_ROWS 11						  //11
 #define MAP_NUM_COLS 15						  //15
 #define WINDOW_WIDTH MAP_NUM_COLS * TILE_SIZE  // 15 * 32 = 480

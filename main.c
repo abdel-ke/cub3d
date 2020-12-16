@@ -29,7 +29,6 @@ int main()
 										 &t.txt[0].height);
 	t.txt[0].data = (int *)mlx_get_data_addr(t.txt[0].img, &t.txt[0].bits_per_pixel,
 											 &t.txt[0].size_line, &t.txt[0].endian); */
-
 	Draw(&t);
 	mlx_hook(t.mlx.win_ptr, 2, (1L << 0), keyPressed, &t);
 	mlx_hook(t.mlx.win_ptr, 3, (1L >> 0), keyRealease, &t);
