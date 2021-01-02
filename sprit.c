@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:51:19 by amouhtal          #+#    #+#             */
-/*   Updated: 2020/12/15 17:59:22 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2020/12/16 17:41:34 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	found_sprite_angle(t_data *cube, int i)
 	double	x;
 	double	y;
 
-	spriteangle = 0;
+	// spriteangle = 0;
 	x = cube->spr[i].spr_x - cube->player.player_x;
 	y = cube->spr[i].spr_y - cube->player.player_y;
 	spriteangle = atan2(y, x);
@@ -89,8 +89,8 @@ void	found_sprite_angle(t_data *cube, int i)
 			(M_PI * 2) + spriteangle;
 	else
 		cube->spr[i].sprite_angle = spriteangle;
-	cube->spr[i].sprite_angle =
-		normalizeAngle(cube->spr[i].sprite_angle);
+	// cube->spr[i].sprite_angle =
+	// 	normalizeAngle(cube->spr[i].sprite_angle);
 }
 
 void	drow_strips(t_data *t, int s_x, int i, int x)
@@ -104,16 +104,16 @@ void	drow_strips(t_data *t, int s_x, int i, int x)
 	start = -1;
 	y = 0;
 	// start = (cube->m.height / 2) - (cube->sprits->hight / 2);
-	start = (WINDOW_HEIGHT / 2) - (t->spr->height / 2);
-	t->spr->end =  (WINDOW_HEIGHT / 2) + (t->spr->height / 2);
+	start = (t->win_h / 2) - (t->spr->height / 2);
+	t->spr->end =  (t->win_h / 2) + (t->spr->height / 2);
 	if (start < 0)
 	{
 		y = -start;
 		start = -1;
 	}
 	xtext = x * (64 / (double)t->spr->height);
-	if (t->spr->end > WINDOW_HEIGHT)
-		t->spr->end = WINDOW_HEIGHT;
+	if (t->spr->end > t->win_h)
+		t->spr->end = t->win_h;
 	while (++start < t->spr->end)
 	{
 		ytext = y * (64 / (double)t->spr->height);
@@ -121,7 +121,7 @@ void	drow_strips(t_data *t, int s_x, int i, int x)
 		// if (cube->ray.dist_tab[s_x] > cube->sprits[i].dist_to_player)
 		if (t->raycast.dist_ray[s_x] > t->spr[i].dist_x)
 			if (color != 0x00000)
-				t->load_data[start * WINDOW_WIDTH + s_x] = color;
+				t->load_data[start * t->win_w + s_x] = color;
 				// cube->data[start * cube->m.witdth + s_x] = color;
 		y++;
 	}
@@ -138,7 +138,7 @@ void	drowsprite(t_data *cube, int i)
 	// * cos(cube->raycast.rayangle- cube->player.rotationAngle);
 	cube->spr->height = (TILE_SIZE /
 	cube->spr[i].dist_x) * cube->raycast.distancebprojectionplane;
-	cube->spr->end = (WINDOW_HEIGHT / 2) + (cube->spr->height / 2);
+	cube->spr->end = (cube->win_h / 2) + (cube->spr->height / 2);
 	cube->spr->x_star_wind = (tan((FOV_ANGLE ) / 2)
 	* cube->raycast.distancebprojectionplane) + (tan(cube->spr[i].sprite_angle
 	- cube->player.rotationAngle) * cube->raycast.distancebprojectionplane)
@@ -147,7 +147,7 @@ void	drowsprite(t_data *cube, int i)
 	while (x < cube->spr->height)
 	{
 		if (cube->spr->x_star_wind >= 0 &&
-		cube->spr->x_star_wind < WINDOW_WIDTH)
+		cube->spr->x_star_wind < cube->win_w)
 			drow_strips(cube, cube->spr->x_star_wind, i, x);
 		x++;
 		cube->spr->x_star_wind++;

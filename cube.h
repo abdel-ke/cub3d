@@ -5,14 +5,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mlx.h>
+// #include "pase/cube3d.h"
 
-#define TSTA 1000
-#define TSTB 800
-#define TILE_SIZE 64
+// #define TSTA 1000
+// #define TSTB 800
+#define TILE_SIZE 96
 #define MAP_NUM_ROWS 11						  //11
 #define MAP_NUM_COLS 15						  //15
-#define WINDOW_WIDTH MAP_NUM_COLS * TILE_SIZE  // 15 * 32 = 480
-#define WINDOW_HEIGHT MAP_NUM_ROWS * TILE_SIZE // 11 * 32 = 352
+// #define WINDOW_WIDTH 1080;//MAP_NUM_COLS * TILE_SIZE  // 15 * 32 = 480
+// #define WINDOW_HEIGHT MAP_NUM_ROWS * TILE_SIZE // 11 * 32 = 352
 
 #define UP_KEY 126	  //126
 #define DOWN_KEY 125  //125
@@ -31,7 +32,7 @@
 
 #define FOV_ANGLE 60 * (M_PI / 180)				 //1.04719755
 #define WALL_STRIP_WIDTH 1						 //5
-#define NUM_RAYS WINDOW_WIDTH / WALL_STRIP_WIDTH // 15 * 32 = 480
+#define NUM_RAYS 1440 / WALL_STRIP_WIDTH // 15 * 32 = 480
 
 #define MINI_MAP 0.2
 
@@ -144,10 +145,14 @@ typedef struct data
 	t_player player;
 	t_raycast raycast;
 	t_sprite *spr;
+
 	int index;
 	int	*load_data;
 	void *load_img;
 	int nbr_spr;
+	int win_h;
+	int win_w;
+	double num_rays;
 } t_data;
 
 char map[MAP_NUM_ROWS][MAP_NUM_COLS] = {

@@ -3,6 +3,9 @@
 void initial_player(t_data *t)
 {
 	t->player.radius = TILE_SIZE * 10 / 100 * MINI_MAP;
+	t->win_w = 1080;
+	t->win_h = 920;
+	t->num_rays = t->win_w / WALL_STRIP_WIDTH;
 	/* t->player.turnDirection = 0;
 	t->player.walkDirection = 0;
 	t->player.step_to_side_left = 0;
@@ -11,7 +14,7 @@ void initial_player(t_data *t)
 	t->player.moveSpeed = 5.0;
 	t->player.rotationSpeed = 2 * (M_PI / 180);
 	t->nbr_spr = 0;
-	t->raycast.dist_ray = (int *)malloc(sizeof(t->raycast.dist_ray) * WINDOW_WIDTH);
+	t->raycast.dist_ray = (int *)malloc(sizeof(t->raycast.dist_ray) * t->win_w);
 	find_player(t);
 	// puts("ok");
 }
@@ -34,7 +37,7 @@ void ddaa(t_data *t, int X0, int Y0, int X1, int Y1)
 	float Y = Y0;
 	for (int i = 0; i <= steps; i++)
 	{
-		t->load_data[(int)Y * WINDOW_WIDTH + (int)X] = 0xf00f0f;
+		t->load_data[(int)Y * t->win_w + (int)X] = 0xf00f0f;
 		// mlx_pixel_put(t->mlx.mlx_ptr, t->mlx.win_ptr, X, Y, 0xF54561);
 		// putpixel (X,Y,RED);  // put pixel at (X,Y)
 		X += Xinc; // increment in x at each step
@@ -95,8 +98,8 @@ void circle(t_data *t, int tileX, int tileY)
 	{
 		x = t->player.radius * cos(a) + tileX * MINI_MAP;
 		y = t->player.radius * sin(a) + tileY * MINI_MAP;
-		// mlx_pixel_put(t->mlx.mlx_ptr, t->mlx.win_ptr, x, y, 0xff00ff);
-		t->load_data[(int)y * WINDOW_WIDTH + (int)x] = 0xff0000;
+		mlx_pixel_put(t->mlx.mlx_ptr, t->mlx.win_ptr, x, y, 0xff00ff);
+		// t->load_data[(int)y * t->win_w + (int)x] = 0xff0000;
 		a += 0.01;
 	}
 }
@@ -185,7 +188,7 @@ void find_player(t_data *t)
 
 void sky_floor_color(t_data *t)
 {
-	int x = WINDOW_HEIGHT / 2 * WINDOW_WIDTH;
+	int x = t->win_h / 2 * t->win_w;
 	int y = 0;
 
 	while (y != x)
@@ -199,7 +202,7 @@ int Draw(t_data *t)
 {
 	mlx_destroy_image(t->mlx.mlx_ptr, t->load_img);
 	// mlx_clear_window(t->mlx.mlx_ptr, t->mlx.img_ptr);
-	t->load_img = mlx_new_image(t->mlx.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	t->load_img = mlx_new_image(t->mlx.mlx_ptr, t->win_w, t->win_h);
 	// mlx_clear_window(t->mlx.mlx_ptr, t->mlx.win_ptr);
 	update_player(t);
 	sky_floor_color(t);

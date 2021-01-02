@@ -19,8 +19,8 @@ int main()
 	initial_player(&t);
 
 	t.mlx.mlx_ptr = mlx_init();
-	t.mlx.win_ptr = mlx_new_window(t.mlx.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "one");
-	t.load_img = mlx_new_image(t.mlx.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	t.mlx.win_ptr = mlx_new_window(t.mlx.mlx_ptr, t.win_w, t.win_h, "one");
+	t.load_img = mlx_new_image(t.mlx.mlx_ptr, t.win_w, t.win_h);
 	t.load_data = (int *)mlx_get_data_addr(t.load_img, &t.txt[0].bits_per_pixel,
 												  &t.txt[0].size_line, &t.txt[0].endian);
 	main_texture(&t);
@@ -29,6 +29,7 @@ int main()
 										 &t.txt[0].height);
 	t.txt[0].data = (int *)mlx_get_data_addr(t.txt[0].img, &t.txt[0].bits_per_pixel,
 											 &t.txt[0].size_line, &t.txt[0].endian); */
+
 	Draw(&t);
 	mlx_hook(t.mlx.win_ptr, 2, (1L << 0), keyPressed, &t);
 	mlx_hook(t.mlx.win_ptr, 3, (1L >> 0), keyRealease, &t);

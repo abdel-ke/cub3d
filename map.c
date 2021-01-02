@@ -16,7 +16,8 @@ void square(t_data *t, int tileX, int tileY)
 		while (y <= TILE_SIZE * MINI_MAP)
 		{
 			// mlx_pixel_put(t->mlx.mlx_ptr, t->mlx.win_ptr, x + tileX, y + tileY, 0xffffff);
-			t->load_data[(tileY + y) * WINDOW_WIDTH + (tileX + x)] = 0x0000ff;
+			t->load_data[(tileY + y) * t->win_w + (tileX + x)] = 0x0000ff;
+			
 			// imag_put(t, x, y, 0xffffff);
 			y++;
 		}

@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 14:25:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2020/12/15 18:35:22 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2020/12/17 14:32:34 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	find_horizontall_wall(t_data *t)
 	/*if (t->raycast.israyfacingup)
 		t->raycast.nexthorztouchy--;*/
 	// incremet xtep and ystep until we find a wall
-	while (t->raycast.nexthorztouchx >= 0 && t->raycast.nexthorztouchx <= WINDOW_WIDTH && t->raycast.nexthorztouchy >= 0 && t->raycast.nexthorztouchy <= WINDOW_HEIGHT)
+	while (t->raycast.nexthorztouchx >= 0 && t->raycast.nexthorztouchx <= TILE_SIZE * MAP_NUM_COLS && t->raycast.nexthorztouchy >= 0 && t->raycast.nexthorztouchy <= TILE_SIZE * MAP_NUM_ROWS)
 	{
 		if (isWallAt(t->raycast.nexthorztouchx, t->raycast.nexthorztouchy - t->raycast.israyfacingup) == 1)
 		{
@@ -119,8 +119,8 @@ void	find_vertical_wall(t_data *t)
 		t->raycast.nextverttouchx--;*/
 
 	// incremet xtep and ystep until we find a wall
-	while (t->raycast.nextverttouchx >= 0 && t->raycast.nextverttouchx <= WINDOW_WIDTH &&
-		   t->raycast.nextverttouchy >= 0 && t->raycast.nextverttouchy <= WINDOW_HEIGHT)
+	while (t->raycast.nextverttouchx >= 0 && t->raycast.nextverttouchx <= TILE_SIZE * MAP_NUM_COLS &&
+		   t->raycast.nextverttouchy >= 0 && t->raycast.nextverttouchy <= TILE_SIZE * MAP_NUM_ROWS)
 	{
 		if (isWallAt(t->raycast.nextverttouchx - t->raycast.israyfacingleft, t->raycast.nextverttouchy) == 1)
 		{
@@ -160,13 +160,7 @@ void	calculate(t_data *t)
 void	cast(t_data *t)
 {
 	init_ray(t);
-	///////////////////////////////////////////
-	// HORIZONTAL RAY-GRID INTERSECTION CODE //
-	///////////////////////////////////////////
 	find_horizontall_wall(t);
-	///////////////////////////////////////////
-	// VERTICAL RAY-GRID INTERSECTION CODE   //
-	///////////////////////////////////////////
 	find_vertical_wall(t);
 	calculate(t);
 	ddaa(t, t->player.player_x * MINI_MAP,
@@ -182,13 +176,13 @@ void	castAllRays(t_data *t)
 	t->raycast.rayangle = t->player.rotationAngle - (FOV_ANGLE / 2);
 	// printf("%.2f\n", t->raycast.rayangle);
 	int i = 0;
-	while (i < NUM_RAYS)
+	while (i < t->num_rays)
 	{
 		cast(t);
 		t->raycast.dist_ray[i] = t->raycast.distance;
 		// printf("%d\t%d\n", t->raycast.distance, t->raycast.dist_ray[i]);
 		render3DProjectedWalls(t, i);
-		t->raycast.rayangle += (FOV_ANGLE / (NUM_RAYS));
+		t->raycast.rayangle += (FOV_ANGLE / (t->num_rays));
 		// columnid++;
 		i++;
 	}
@@ -205,7 +199,7 @@ void	rect(t_data *t, int x, int y, double tile_x, double tile_y, int color)
 	{
 		j = -1;
 		while (++j < tile_y)
-			t->load_data[y * WINDOW_WIDTH + x] = color;
+			t->load_data[y * t->win_w + x] = color;
 		// mlx_pixel_put(t->mlx.mlx_ptr, t->mlx.win_ptr, x + i, y + j, color);
 	}
 }
@@ -246,15 +240,15 @@ void	render3DProjectedWalls(t_data *t, int i)
 							 cos(t->raycast.rayangle - t->player.rotationAngle);
 
 	// calculate the distance to the projection plane
-	t->raycast.distancebprojectionplane = (WINDOW_WIDTH / 2) /
+	t->raycast.distancebprojectionplane = (t->win_w / 2) /
 										  tan(FOV_ANGLE / 2);
 
 	// projected wall height
 	t->raycast.wallstripheight = (TILE_SIZE / t->raycast.raydistance) *
 								 t->raycast.distancebprojectionplane;
 
-	start = WINDOW_HEIGHT / 2 - t->raycast.wallstripheight / 2;
-	end = WINDOW_HEIGHT / 2 + t->raycast.wallstripheight / 2;
+	start = t->win_h / 2 - t->raycast.wallstripheight / 2;
+	end = t->win_h / 2 + t->raycast.wallstripheight / 2;
 
 	int xtex = washitvertical(t);
 
@@ -266,9 +260,9 @@ void	render3DProjectedWalls(t_data *t, int i)
 	int ytex;
 	if (start < 0)
 		j += -start;
-	if (end > WINDOW_HEIGHT)
+	if (end > t->win_h)
 	{
-		end = WINDOW_HEIGHT;
+		end = t->win_h;
 		start = 0;
 	}
 	while (start < end)
@@ -276,17 +270,17 @@ void	render3DProjectedWalls(t_data *t, int i)
 		ytex = j * ((double)t->txt[t->index].height / (double)t->raycast.wallstripheight);
 		color = t->txt[t->index].data[ytex * t->txt[t->index].width + xtex];
 		// int color2 = t->spr[0].data_spr[ytex * t->spr[0].width + xtex];
-		if (start >= 0 && start < WINDOW_HEIGHT)
+		if (start >= 0 && start < t->win_h)
 		{
-			t->load_data[(WINDOW_WIDTH * start) + i] = color; //t->txt[0].data[(143 + j)];
-			// t->load_data[(WINDOW_WIDTH * start) + i] = color2; //t->txt[0].data[(143 + j)];
+			t->load_data[(t->win_w * start) + i] = color; //t->txt[0].data[(143 + j)];
+			// t->load_data[(t->win_w * start) + i] = color2; //t->txt[0].data[(143 + j)];
 			j++;
 		}
 		start++;
 	}
 	// rect(t,
 	// 	 i,
-	// 	 (WINDOW_HEIGHT / 2) - (wallStripHeight / 2),
+	// 	 (t->win_h / 2) - (wallStripHeight / 2),
 	// 	 WALL_STRIP_WIDTH,
 	// 	 wallStripHeight,
 	// 	 0xff00ff);
