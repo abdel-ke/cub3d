@@ -5,93 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/19 13:51:19 by amouhtal          #+#    #+#             */
-/*   Updated: 2020/12/16 17:41:34 by abdel-ke         ###   ########.fr       */
+/*   Created: 2021/01/04 11:38:26 by abdel-ke          #+#    #+#             */
+/*   Updated: 2021/01/04 11:41:12 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-void	ft_sort_sprite(t_data *cube, double spx, double spy, int count)
-{
-	double	dist;
-	int		i;
-
-	i = 0;
-	while (i < count - 1)
-	{
-		spx = cube->spr[i].spr_x;
-		spy = cube->spr[i].spr_y;
-		dist = cube->spr[i].dist_x;
-		if (dist < cube->spr[i + 1].dist_x)
-		{
-			cube->spr[i].spr_x = cube->spr[i + 1].spr_x;
-			cube->spr[i].spr_y = cube->spr[i + 1].spr_y;
-			cube->spr[i].dist_x = cube->spr[i + 1].dist_x;
-			cube->spr[i].sprite_angle = cube->spr[i + 1].sprite_angle;
-			cube->spr[i + 1].spr_x = spx;
-			cube->spr[i + 1].spr_y = spy;
-			cube->spr[i + 1].dist_x = dist;
-			i = -1;
-		}
-		i++;
-	}
-}
-
-double	ft_diffangle(double diffangle)
-{
-	if (diffangle < -3.14159)
-		diffangle += 2.0 * 3.14159;
-	if (diffangle > 3.14159)
-		diffangle -= 2.0 * 3.14159;
-	return (diffangle);
-}
-
-int		sprite_visible(t_data *cube, int sprite_indice)
-{
-	double vectx;
-	double vecty;
-	double angle;
-	double diffangle;
-	double opp;
-
-	cube->spr->height = (TILE_SIZE /
-	cube->spr[sprite_indice].dist_x) * cube->raycast.distancebprojectionplane;
-	opp = cube->spr->height / 2;
-	cube->spr->ag = atan(opp / cube->raycast.distancebprojectionplane);
-	vectx = (cube->spr[sprite_indice].spr_x) - cube->player.player_x;
-	vecty = (cube->spr[sprite_indice].spr_y) - cube->player.player_y;
-	angle = atan2(vecty, vectx);
-	if (angle <= 0.)
-		angle = (2 * M_PI) + angle;
-	diffangle = cube->player.rotationAngle - angle;
-	diffangle = ft_diffangle(diffangle);
-	diffangle = fabs(diffangle);
-	if (diffangle - cube->spr->ag < ((FOV_ANGLE / 2)))
-		{//puts("yes");
-			return (1);}
-	else
-		return (0);
-}
-
-void	found_sprite_angle(t_data *cube, int i)
-{
-	double	spriteangle;
-	double	x;
-	double	y;
-
-	// spriteangle = 0;
-	x = cube->spr[i].spr_x - cube->player.player_x;
-	y = cube->spr[i].spr_y - cube->player.player_y;
-	spriteangle = atan2(y, x);
-	if (spriteangle <= 0.)
-		cube->spr[i].sprite_angle =
-			(M_PI * 2) + spriteangle;
-	else
-		cube->spr[i].sprite_angle = spriteangle;
-	// cube->spr[i].sprite_angle =
-	// 	normalizeAngle(cube->spr[i].sprite_angle);
-}
 
 void	drow_strips(t_data *t, int s_x, int i, int x)
 {
@@ -103,7 +22,6 @@ void	drow_strips(t_data *t, int s_x, int i, int x)
 
 	start = -1;
 	y = 0;
-	// start = (cube->m.height / 2) - (cube->sprits->hight / 2);
 	start = (t->win_h / 2) - (t->spr->height / 2);
 	t->spr->end =  (t->win_h / 2) + (t->spr->height / 2);
 	if (start < 0)
@@ -118,11 +36,9 @@ void	drow_strips(t_data *t, int s_x, int i, int x)
 	{
 		ytext = y * (64 / (double)t->spr->height);
 		color = t->spr->data_spr[ytext * 64 + xtext];
-		// if (cube->ray.dist_tab[s_x] > cube->sprits[i].dist_to_player)
-		if (t->raycast.dist_ray[s_x] > t->spr[i].dist_x)
+		if (t->r_cst.dist_ray[s_x] > t->spr[i].dist_x)
 			if (color != 0x00000)
 				t->load_data[start * t->win_w + s_x] = color;
-				// cube->data[start * cube->m.witdth + s_x] = color;
 		y++;
 	}
 }
@@ -134,16 +50,13 @@ void	drowsprite(t_data *cube, int i)
 
 	y = 0;
 	x = 0;
-	// cube->spr[i].dist_x = cube->spr[i].dist_x
-	// * cos(cube->raycast.rayangle- cube->player.rotationAngle);
 	cube->spr->height = (TILE_SIZE /
-	cube->spr[i].dist_x) * cube->raycast.distancebprojectionplane;
+	cube->spr[i].dist_x) * cube->r_cst.distbprojectplane;
 	cube->spr->end = (cube->win_h / 2) + (cube->spr->height / 2);
 	cube->spr->x_star_wind = (tan((FOV_ANGLE ) / 2)
-	* cube->raycast.distancebprojectionplane) + (tan(cube->spr[i].sprite_angle
-	- cube->player.rotationAngle) * cube->raycast.distancebprojectionplane)
+	* cube->r_cst.distbprojectplane) + (tan(cube->spr[i].spr_angle
+	- cube->p.rot_an) * cube->r_cst.distbprojectplane)
 	- (cube->spr->height / 2);
-	//printf("%f\n",cube->spr->x_star_wind);
 	while (x < cube->spr->height)
 	{
 		if (cube->spr->x_star_wind >= 0 &&
@@ -159,11 +72,10 @@ void	draw_sprite(t_data *cube, int count)
 	int i;
 
 	i = 0;
-
-	cube->player.rotationAngle = normalizeAngle(cube->player.rotationAngle);
+	cube->p.rot_an = normalizeAngle(cube->p.rot_an);
 	while (i < count)
 	{
-		found_sprite_angle(cube, i);
+		found_spr_angle(cube, i);
 		if (sprite_visible(cube, i) == 1)
 			{
 				drowsprite(cube, i);
@@ -172,7 +84,7 @@ void	draw_sprite(t_data *cube, int count)
 	}
 }
 
-void stock_pos_spr(t_data *t)
+void	stock_pos_spr(t_data *t)
 {
 	int i;
 	int j;
@@ -206,11 +118,9 @@ void	find_sprit(t_data *cube)
 	while (count < cube->nbr_spr)
 	{
 		cube->spr[count].dist_x =
-		// sqrt(pow(cube->spr[count].spr_x - cube->spr[count].spr_y, 2) +
-		// pow(cube->player.player_x - cube->player.player_y, 2));
-		distanceBetweenPoints(cube->spr[count].spr_x,
-		cube->spr[count].spr_y, cube->player.player_x,
-		cube->player.player_y);
+		distBetweenPoints(cube->spr[count].spr_x,
+		cube->spr[count].spr_y, cube->p.pl_x,
+		cube->p.pl_y);
 		count++;
 	}
 	ft_sort_sprite(cube, 0, 0, count);

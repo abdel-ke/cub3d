@@ -12,26 +12,26 @@
 
 #include "cube.h"
 
-void main_texture(t_data *t)
+void main_texture(t_data *d)
 {
-	t->txt[0].img = mlx_xpm_file_to_image(t->mlx.mlx_ptr, "image/SO.XPM",
-	&t->txt[0].width, &t->txt[0].height);
-	t->txt[0].data = (int *)mlx_get_data_addr(t->txt[0].img,
-	&t->txt[0].bits_per_pixel, &t->txt[0].size_line, &t->txt[0].endian);
-	t->txt[1].img = mlx_xpm_file_to_image(t->mlx.mlx_ptr, "image/NO.XPM",
-	&t->txt[1].width, &t->txt[1].height);
-	t->txt[1].data = (int *)mlx_get_data_addr(t->txt[1].img,
-	&t->txt[1].bits_per_pixel, &t->txt[1].size_line, &t->txt[1].endian);
-	t->txt[2].img = mlx_xpm_file_to_image(t->mlx.mlx_ptr, "image/EA.XPM",
-	&t->txt[2].width, &t->txt[2].height);
-	t->txt[2].data = (int *)mlx_get_data_addr(t->txt[2].img,
-	&t->txt[2].bits_per_pixel, &t->txt[2].size_line, &t->txt[2].endian);
-	t->txt[3].img = mlx_xpm_file_to_image(t->mlx.mlx_ptr, "image/WE.XPM",
-	&t->txt[3].width, &t->txt[3].height);
-	t->txt[3].data = (int *)mlx_get_data_addr(t->txt[3].img,
-	&t->txt[3].bits_per_pixel, &t->txt[3].size_line, &t->txt[3].endian);
-	t->spr->img_spr = mlx_xpm_file_to_image(t->mlx.mlx_ptr, "image/barrel.XPM",
-	&t->spr->width, &t->spr->height1);
-	t->spr->data_spr = (int *)mlx_get_data_addr(t->spr->img_spr,
-	&t->spr->bits_per_pixel, &t->spr->size_line, &t->spr->endian);
+	d->txt[0].img = mlx_xpm_file_to_image(d->mlx.mlx_ptr, "image/SO.XPM",
+	&d->txt[0].width, &d->txt[0].height);
+	d->txt[0].data = (int *)mlx_get_data_addr(d->txt[0].img,
+	&d->txt[0].bits_per_pixel, &d->txt[0].size_line, &d->txt[0].endian);
+	d->txt[1].img = mlx_xpm_file_to_image(d->mlx.mlx_ptr, "image/NO.XPM",
+	&d->txt[1].width, &d->txt[1].height);
+	d->txt[1].data = (int *)mlx_get_data_addr(d->txt[1].img,
+	&d->txt[1].bits_per_pixel, &d->txt[1].size_line, &d->txt[1].endian);
+	d->txt[2].img = mlx_xpm_file_to_image(d->mlx.mlx_ptr, "image/EA.XPM",
+	&d->txt[2].width, &d->txt[2].height);
+	d->txt[2].data = (int *)mlx_get_data_addr(d->txt[2].img,
+	&d->txt[2].bits_per_pixel, &d->txt[2].size_line, &d->txt[2].endian);
+	d->txt[3].img = mlx_xpm_file_to_image(d->mlx.mlx_ptr, "image/WE.XPM",
+	&d->txt[3].width, &d->txt[3].height);
+	d->txt[3].data = (int *)mlx_get_data_addr(d->txt[3].img,
+	&d->txt[3].bits_per_pixel, &d->txt[3].size_line, &d->txt[3].endian);
+	d->spr->img_spr = mlx_xpm_file_to_image(d->mlx.mlx_ptr, "image/barrel.XPM",
+	&d->spr->width, &d->spr->height1);
+	d->spr->data_spr = (int *)mlx_get_data_addr(d->spr->img_spr,
+	&d->spr->bits_per_pixel, &d->spr->size_line, &d->spr->endian);
 }

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sprite_util.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/19 13:51:13 by amouhtal          #+#    #+#             */
-/*   Updated: 2020/12/13 14:50:02 by abdel-ke         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cube.h"
 
 void	ft_sort_sprite(t_data *cube, double spx, double spy, int count)
@@ -28,7 +16,7 @@ void	ft_sort_sprite(t_data *cube, double spx, double spy, int count)
 			cube->spr[i].spr_x = cube->spr[i + 1].spr_x;
 			cube->spr[i].spr_y = cube->spr[i + 1].spr_y;
 			cube->spr[i].dist_x = cube->spr[i + 1].dist_x;
-			cube->spr[i].sprite_angle = cube->spr[i + 1].sprite_angle;
+			cube->spr[i].spr_angle = cube->spr[i + 1].spr_angle;
 			cube->spr[i + 1].spr_x = spx;
 			cube->spr[i + 1].spr_y = spy;
 			cube->spr[i + 1].dist_x = dist;
@@ -56,38 +44,35 @@ int		sprite_visible(t_data *cube, int sprite_indice)
 	double opp;
 
 	cube->spr->height = (TILE_SIZE /
-	cube->spr[sprite_indice].dist_x) * cube->raycast.distancebprojectionplane;
+	cube->spr[sprite_indice].dist_x) * cube->r_cst.distbprojectplane;
 	opp = cube->spr->height / 2;
-	cube->spr->ag = atan(opp / cube->raycast.distancebprojectionplane);
-	vectx = (cube->spr[sprite_indice].spr_x) - cube->player.player_x;
-	vecty = (cube->spr[sprite_indice].spr_y) - cube->player.player_y;
+	cube->spr->ag = atan(opp / cube->r_cst.distbprojectplane);
+	vectx = (cube->spr[sprite_indice].spr_x) - cube->p.pl_x;
+	vecty = (cube->spr[sprite_indice].spr_y) - cube->p.pl_y;
 	angle = atan2(vecty, vectx);
 	if (angle <= 0.)
 		angle = (2 * M_PI) + angle;
-	diffangle = cube->player.rotationAngle - angle;
+	diffangle = cube->p.rot_an - angle;
 	diffangle = ft_diffangle(diffangle);
 	diffangle = fabs(diffangle);
-	if (diffangle - cube->spr->ag < ((FOV_ANGLE / 2) * cube->player.rotationAngle * M_PI / 180))
+	if (diffangle - cube->spr->ag < ((FOV_ANGLE / 2)))
 		return (1);
 	else
 		return (0);
 }
 
-void	found_sprite_angle(t_data *cube, int i)
+void	found_spr_angle(t_data *cube, int i)
 {
 	double	spriteangle;
 	double	x;
 	double	y;
 
-	spriteangle = 0;
-	x = cube->spr[i].spr_x - cube->player.player_x;
-	y = cube->spr[i].spr_y - cube->player.player_y;
+	x = cube->spr[i].spr_x - cube->p.pl_x;
+	y = cube->spr[i].spr_y - cube->p.pl_y;
 	spriteangle = atan2(y, x);
 	if (spriteangle <= 0.)
-		cube->spr[i].sprite_angle =
+		cube->spr[i].spr_angle =
 			(M_PI * 2) + spriteangle;
 	else
-		cube->spr[i].sprite_angle = spriteangle;
-	cube->spr[i].sprite_angle =
-		normalizeAngle(cube->spr[i].sprite_angle);
+		cube->spr[i].spr_angle = spriteangle;
 }

@@ -7,36 +7,42 @@
 	*(unsigned int *)dst = color;
 }*/
 
-void square(t_data *t, int tileX, int tileY)
+void	square(t_data *t, int tileX, int tileY)
 {
-	int x = 0, y;
+	int x;
+	int y;
+
+	x = 0;
 	while (x <= TILE_SIZE * MINI_MAP)
 	{
 		y = 0;
 		while (y <= TILE_SIZE * MINI_MAP)
 		{
-			// mlx_pixel_put(t->mlx.mlx_ptr, t->mlx.win_ptr, x + tileX, y + tileY, 0xffffff);
 			t->load_data[(tileY + y) * t->win_w + (tileX + x)] = 0x0000ff;
-			
-			// imag_put(t, x, y, 0xffffff);
 			y++;
 		}
 		x++;
 	}
 }
 
-void draw_map(t_data *t)
+void	draw_map(t_data *t)
 {
-	int i, j;
-	for (i = 0; i < MAP_NUM_ROWS; i++)
+	int i;
+	int j;
+
+	i = 0;
+	while (i < MAP_NUM_ROWS)
 	{
-		for (j = 0; j < MAP_NUM_COLS; j++)
+		j = 0;
+		while (j < MAP_NUM_COLS)
 		{
 			int tileX = j * TILE_SIZE * MINI_MAP;
 			int tileY = i * TILE_SIZE * MINI_MAP;
 			if (map[i][j] == '1')
 				square(t, (int)tileX, (int)tileY);
+			j++;
 		}
+		i++;
 	}
-	circle(t, t->player.player_x, t->player.player_y);
+	circle(t, t->p.pl_x, t->p.pl_y);
 }

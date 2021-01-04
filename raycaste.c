@@ -6,282 +6,243 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 14:25:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2020/12/17 14:32:34 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/04 11:37:46 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-void	init_ray(t_data *t)
+void	init_ray(t_data *d)
 {
-	t->raycast.rayangle = normalizeAngle(t->raycast.rayangle);
-
-	t->raycast.wallHitX = 0;
-	t->raycast.wallHitY = 0;
-
-	t->raycast.distance = 0;
-	t->raycast.washitvertical = 0;
-
-	t->raycast.israyfacingdown = t->raycast.rayangle > 0 && t->raycast.rayangle < M_PI;
-	t->raycast.israyfacingup = !t->raycast.israyfacingdown;
-
-	t->raycast.israyfacingright = t->raycast.rayangle < M_PI / 2 || t->raycast.rayangle > 3 * M_PI / 2;
-	t->raycast.israyfacingleft = !t->raycast.israyfacingright;
-
-	t->raycast.founhorzwallhit = 0;
-	t->raycast.nexthorztouchx = 0;
-	t->raycast.nexthorztouchy = 0;
-
-	t->raycast.horzwallhitx = 0;
-	t->raycast.horzwallhity = 0;
-
-	t->raycast.founvertwallhit = 0;
-
-	t->raycast.nextverttouchx = 0;
-	t->raycast.nextverttouchy = 0;
-
-	t->raycast.vertwallhitx = 0;
-	t->raycast.vertwallhity = 0;
+	d->r_cst.rayangle = normalizeAngle(d->r_cst.rayangle);
+	d->r_cst.wallhit_x = 0;
+	d->r_cst.wallhit_y = 0;
+	d->r_cst.dist = 0;
+	d->r_cst.was_hitvert = 0;
+	d->r_cst.is_ray_down = d->r_cst.rayangle > 0 && d->r_cst.rayangle < M_PI;
+	d->r_cst.is_ray_up = !d->r_cst.is_ray_down;
+	d->r_cst.is_ray_right = d->r_cst.rayangle < M_PI / 2 ||
+	d->r_cst.rayangle > 3 * M_PI / 2;
+	d->r_cst.is_ray_lft = !d->r_cst.is_ray_right;
+	d->r_cst.founhorzwallhit = 0;
+	d->r_cst.nexthorztouchx = 0;
+	d->r_cst.nexthorztouchy = 0;
+	d->r_cst.horzwallhit_x = 0;
+	d->r_cst.horzwallhit_y = 0;
+	d->r_cst.founvertwallhit = 0;
+	d->r_cst.nextverttouchx = 0;
+	d->r_cst.nextverttouchy = 0;
+	d->r_cst.vertwallhit_x = 0;
+	d->r_cst.vertwallhit_y = 0;
 }
 
 double	normalizeAngle(double angle)
 {
-	// angle = (int)angle % (2 * (int)M_PI);
 	angle = remainder(angle, 2 * M_PI);
 	if (angle < 0)
 		angle += (2 * M_PI);
-	/* if (angle == 2 * M_PI)// || angle < 0)
-		angle = 0; */
 	return (angle);
 }
 
-double	distanceBetweenPoints(double x1, double y1, double x2, double y2)
+double	distBetweenPoints(double x1, double y1, double x2, double y2)
 {
-	// return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 	return (sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
 }
 
-void	find_horizontall_wall(t_data *t)
+void	find_horizontall_wall(t_data *d)
 {
-	// finding the intersection with the grid cells
-	// Find the y-coordinate of the closest horizontal grid intersenction
-	t->raycast.yintercept = floor(t->player.player_y / TILE_SIZE) * TILE_SIZE;
-	t->raycast.yintercept += t->raycast.israyfacingdown ? TILE_SIZE : 0;
-	// Find the x-coordinate of the closest horizontal grid intersection
-	t->raycast.xintercept = t->player.player_x + ((t->raycast.yintercept - t->player.player_y) / tan(t->raycast.rayangle));
-	// Calculate the increment xstep and ystep
-	t->raycast.ystep = TILE_SIZE;
-	t->raycast.ystep *= t->raycast.israyfacingup ? -1 : 1;
-	t->raycast.xstep = TILE_SIZE / tan(t->raycast.rayangle);
-	t->raycast.xstep *= (t->raycast.israyfacingleft && t->raycast.xstep > 0) ? -1 : 1;
-	t->raycast.xstep *= (t->raycast.israyfacingright && t->raycast.xstep < 0) ? -1 : 1;
-	t->raycast.nexthorztouchx = t->raycast.xintercept;
-	t->raycast.nexthorztouchy = t->raycast.yintercept;
-	/*if (t->raycast.israyfacingup)
-		t->raycast.nexthorztouchy--;*/
+	d->r_cst.yintercept = floor(d->p.pl_y / TILE_SIZE) * TILE_SIZE;
+	d->r_cst.yintercept += d->r_cst.is_ray_down ? TILE_SIZE : 0;
+	d->r_cst.xintercept = d->p.pl_x + ((d->r_cst.yintercept - d->p.pl_y) /
+	tan(d->r_cst.rayangle));
+	d->r_cst.ystep = TILE_SIZE;
+	d->r_cst.ystep *= d->r_cst.is_ray_up ? -1 : 1;
+	d->r_cst.xstep = TILE_SIZE / tan(d->r_cst.rayangle);
+	d->r_cst.xstep *= (d->r_cst.is_ray_lft && d->r_cst.xstep > 0) ? -1 : 1;
+	d->r_cst.xstep *= (d->r_cst.is_ray_right && d->r_cst.xstep < 0) ? -1 : 1;
+	d->r_cst.nexthorztouchx = d->r_cst.xintercept;
+	d->r_cst.nexthorztouchy = d->r_cst.yintercept;
 	// incremet xtep and ystep until we find a wall
-	while (t->raycast.nexthorztouchx >= 0 && t->raycast.nexthorztouchx <= TILE_SIZE * MAP_NUM_COLS && t->raycast.nexthorztouchy >= 0 && t->raycast.nexthorztouchy <= TILE_SIZE * MAP_NUM_ROWS)
+	while (d->r_cst.nexthorztouchx >= 0 &&
+	d->r_cst.nexthorztouchx <= TILE_SIZE * MAP_NUM_COLS &&
+	d->r_cst.nexthorztouchy >= 0 && d->r_cst.nexthorztouchy <=
+	TILE_SIZE * MAP_NUM_ROWS)
 	{
-		if (isWallAt(t->raycast.nexthorztouchx, t->raycast.nexthorztouchy - t->raycast.israyfacingup) == 1)
+		if (isWallAt(d->r_cst.nexthorztouchx,
+		d->r_cst.nexthorztouchy - d->r_cst.is_ray_up) == 1)
 		{
-			t->raycast.founhorzwallhit = 1;
-			t->raycast.horzwallhitx = t->raycast.nexthorztouchx;
-			t->raycast.horzwallhity = t->raycast.nexthorztouchy;
+			d->r_cst.founhorzwallhit = 1;
+			d->r_cst.horzwallhit_x = d->r_cst.nexthorztouchx;
+			d->r_cst.horzwallhit_y = d->r_cst.nexthorztouchy;
 			break;
 		}
 		else
 		{
-			t->raycast.nexthorztouchx += t->raycast.xstep;
-			t->raycast.nexthorztouchy += t->raycast.ystep;
+			d->r_cst.nexthorztouchx += d->r_cst.xstep;
+			d->r_cst.nexthorztouchy += d->r_cst.ystep;
 		}
 	}
 }
 
-void	find_vertical_wall(t_data *t)
+void	find_vertical_wall(t_data *d)
 {
-	t->raycast.xintercept = floor(t->player.player_x / TILE_SIZE) * TILE_SIZE;
-	t->raycast.xintercept += t->raycast.israyfacingright ? TILE_SIZE : 0;
+	d->r_cst.xintercept = floor(d->p.pl_x / TILE_SIZE) * TILE_SIZE;
+	d->r_cst.xintercept += d->r_cst.is_ray_right ? TILE_SIZE : 0;
 
 	// Find the x-coordinate of the closest horizontal grid intersection
-	t->raycast.yintercept = t->player.player_y + ((t->raycast.xintercept - t->player.player_x) * tan(t->raycast.rayangle));
+	d->r_cst.yintercept = d->p.pl_y + ((d->r_cst.xintercept - d->p.pl_x) * tan(d->r_cst.rayangle));
 
 	// Calculate the increment xstep and ystep
-	t->raycast.xstep = TILE_SIZE;
-	t->raycast.xstep *= t->raycast.israyfacingleft ? -1 : 1;
+	d->r_cst.xstep = TILE_SIZE;
+	d->r_cst.xstep *= d->r_cst.is_ray_lft ? -1 : 1;
 
-	t->raycast.ystep = TILE_SIZE * tan(t->raycast.rayangle);
-	t->raycast.ystep *= (t->raycast.israyfacingup && t->raycast.ystep > 0) ? -1 : 1;
-	t->raycast.ystep *= (t->raycast.israyfacingdown && t->raycast.ystep < 0) ? -1 : 1;
+	d->r_cst.ystep = TILE_SIZE * tan(d->r_cst.rayangle);
+	d->r_cst.ystep *= (d->r_cst.is_ray_up && d->r_cst.ystep > 0) ? -1 : 1;
+	d->r_cst.ystep *= (d->r_cst.is_ray_down && d->r_cst.ystep < 0) ? -1 : 1;
 
-	t->raycast.nextverttouchx = t->raycast.xintercept;
-	t->raycast.nextverttouchy = t->raycast.yintercept;
-	/*if (t->raycast.israyfacingleft)
-		t->raycast.nextverttouchx--;*/
+	d->r_cst.nextverttouchx = d->r_cst.xintercept;
+	d->r_cst.nextverttouchy = d->r_cst.yintercept;
+	/*if (d->raycast.is_ray_lft)
+		d->raycast.nextverttouchx--;*/
 
 	// incremet xtep and ystep until we find a wall
-	while (t->raycast.nextverttouchx >= 0 && t->raycast.nextverttouchx <= TILE_SIZE * MAP_NUM_COLS &&
-		   t->raycast.nextverttouchy >= 0 && t->raycast.nextverttouchy <= TILE_SIZE * MAP_NUM_ROWS)
+	while (d->r_cst.nextverttouchx >= 0 && d->r_cst.nextverttouchx <= TILE_SIZE * MAP_NUM_COLS &&
+		   d->r_cst.nextverttouchy >= 0 && d->r_cst.nextverttouchy <= TILE_SIZE * MAP_NUM_ROWS)
 	{
-		if (isWallAt(t->raycast.nextverttouchx - t->raycast.israyfacingleft, t->raycast.nextverttouchy) == 1)
+		if (isWallAt(d->r_cst.nextverttouchx - d->r_cst.is_ray_lft, d->r_cst.nextverttouchy) == 1)
 		{
-			t->raycast.founvertwallhit = 1;
-			t->raycast.vertwallhitx = t->raycast.nextverttouchx;
-			t->raycast.vertwallhity = t->raycast.nextverttouchy;
-			// ddaa(t, t->player.player_x, t->player.player_y, vertwallhitx, vertwallhity);
+			d->r_cst.founvertwallhit = 1;
+			d->r_cst.vertwallhit_x = d->r_cst.nextverttouchx;
+			d->r_cst.vertwallhit_y = d->r_cst.nextverttouchy;
+			// ddaa(d, d->player.pl_x, d->player.pl_y, vertwallhit_x, vertwallhit_y);
 			break;
 		}
 		else
 		{
-			t->raycast.nextverttouchx += t->raycast.xstep;
-			t->raycast.nextverttouchy += t->raycast.ystep;
+			d->r_cst.nextverttouchx += d->r_cst.xstep;
+			d->r_cst.nextverttouchy += d->r_cst.ystep;
 		}
 	}
 }
 
-void	calculate(t_data *t)
+void	calculate(t_data *d)
 {
-	// Calculate both horizontal and vertical distances and choose the smallest value
-	t->raycast.horzhitdistance = (t->raycast.founhorzwallhit)
-									 ? distanceBetweenPoints(t->player.player_x, t->player.player_y,
-															 t->raycast.horzwallhitx, t->raycast.horzwallhity)
-									 : __INT_MAX__;
-	t->raycast.verthitdistance = (t->raycast.founvertwallhit)
-									 ? distanceBetweenPoints(t->player.player_x, t->player.player_y,
-															 t->raycast.vertwallhitx, t->raycast.vertwallhity)
-									 : __INT_MAX__;
-
-	// only store the smallest of the distances
-	t->raycast.wallHitX = (t->raycast.horzhitdistance < t->raycast.verthitdistance) ? t->raycast.horzwallhitx : t->raycast.vertwallhitx;
-	t->raycast.wallHitY = (t->raycast.horzhitdistance < t->raycast.verthitdistance) ? t->raycast.horzwallhity : t->raycast.vertwallhity;
-	t->raycast.distance = (t->raycast.horzhitdistance < t->raycast.verthitdistance) ? t->raycast.horzhitdistance : t->raycast.verthitdistance;
-	t->raycast.washitvertical = (t->raycast.verthitdistance < t->raycast.horzhitdistance);
+	d->r_cst.horzhitdist = (d->r_cst.founhorzwallhit)
+	? distBetweenPoints(d->p.pl_x, d->p.pl_y, d->r_cst.horzwallhit_x,
+	d->r_cst.horzwallhit_y) : __INT_MAX__;
+	d->r_cst.verthitdist = (d->r_cst.founvertwallhit)
+	? distBetweenPoints(d->p.pl_x, d->p.pl_y, d->r_cst.vertwallhit_x,
+	d->r_cst.vertwallhit_y) : __INT_MAX__;
+	d->r_cst.wallhit_x = (d->r_cst.horzhitdist < d->r_cst.verthitdist) ?
+	d->r_cst.horzwallhit_x : d->r_cst.vertwallhit_x;
+	d->r_cst.wallhit_y = (d->r_cst.horzhitdist < d->r_cst.verthitdist) ?
+	d->r_cst.horzwallhit_y : d->r_cst.vertwallhit_y;
+	d->r_cst.dist = (d->r_cst.horzhitdist < d->r_cst.verthitdist) ?
+	d->r_cst.horzhitdist : d->r_cst.verthitdist;
+	d->r_cst.was_hitvert = (d->r_cst.verthitdist < d->r_cst.horzhitdist);
 }
 
-void	cast(t_data *t)
+void	cast(t_data *d)
 {
-	init_ray(t);
-	find_horizontall_wall(t);
-	find_vertical_wall(t);
-	calculate(t);
-	ddaa(t, t->player.player_x * MINI_MAP,
-		 t->player.player_y * MINI_MAP,
-		 t->raycast.wallHitX * MINI_MAP,
-		 t->raycast.wallHitY * MINI_MAP);
+	init_ray(d);
+	find_horizontall_wall(d);
+	find_vertical_wall(d);
+	calculate(d);
+	ddaa(d, d->p.pl_x * MINI_MAP, d->p.pl_y * MINI_MAP,
+	d->r_cst.wallhit_x * MINI_MAP, d->r_cst.wallhit_y * MINI_MAP);
 }
 
-void	castAllRays(t_data *t)
+void	castAllRays(t_data *d)
 {
-	// int columnid = 0;
-	// start first ray subtracting half of the FOV
-	t->raycast.rayangle = t->player.rotationAngle - (FOV_ANGLE / 2);
-	// printf("%.2f\n", t->raycast.rayangle);
-	int i = 0;
-	while (i < t->num_rays)
+	int i;
+	d->r_cst.rayangle = d->p.rot_an - (FOV_ANGLE / 2);
+	i = 0;
+	while (i < d->num_rays)
 	{
-		cast(t);
-		t->raycast.dist_ray[i] = t->raycast.distance;
-		// printf("%d\t%d\n", t->raycast.distance, t->raycast.dist_ray[i]);
-		render3DProjectedWalls(t, i);
-		t->raycast.rayangle += (FOV_ANGLE / (t->num_rays));
-		// columnid++;
+		cast(d);
+		d->r_cst.dist_ray[i] = d->r_cst.dist;
+		render3DProjectedWalls(d, i);
+		d->r_cst.rayangle += (FOV_ANGLE / (d->num_rays));
 		i++;
 	}
-	find_sprit(t);
-	mlx_put_image_to_window(t->mlx.mlx_ptr, t->mlx.win_ptr, t->load_img, 0, 0);
+	find_sprit(d);
+	mlx_put_image_to_window(d->mlx.mlx_ptr, d->mlx.win_ptr, d->load_img, 0, 0);
 }
 
-void	rect(t_data *t, int x, int y, double tile_x, double tile_y, int color)
+void	rect(t_data *d, int x, int y, double tile_x, double tile_y, int color)
 {
-	int i = -1;
+	int i;
 	int j;
 
-	while (++i < tile_x)
+	i = 0;
+	while (i < tile_x)
 	{
 		j = -1;
 		while (++j < tile_y)
-			t->load_data[y * t->win_w + x] = color;
-		// mlx_pixel_put(t->mlx.mlx_ptr, t->mlx.win_ptr, x + i, y + j, color);
+			d->load_data[y * d->win_w + x] = color;
+		i++;
 	}
 }
 
-int		is_text_up_down(t_data *t)
+int		is_text_up_down(t_data *d)
 {
-	if (!t->raycast.israyfacingup)
-		t->index = 0;
-	else if (!t->raycast.israyfacingdown)
-		t->index = 1;
-	return ((int)t->raycast.wallHitX % TILE_SIZE * t->txt[t->index].width / TILE_SIZE);
+	if (!d->r_cst.is_ray_up)
+		d->index = 0;
+	else if (!d->r_cst.is_ray_down)
+		d->index = 1;
+	return ((int)d->r_cst.wallhit_x % TILE_SIZE *
+	d->txt[d->index].width / TILE_SIZE);
 }
 
-int		is_text_left_right(t_data *t)
+int		is_text_left_right(t_data *d)
 {
-	if (!t->raycast.israyfacingleft)
-		t->index = 2;
-	else if (!t->raycast.israyfacingright)
-		t->index = 3;
-	return ((int)t->raycast.wallHitY % TILE_SIZE * t->txt[t->index].width / TILE_SIZE);
+	if (!d->r_cst.is_ray_lft)
+		d->index = 2;
+	else if (!d->r_cst.is_ray_right)
+		d->index = 3;
+	return ((int)d->r_cst.wallhit_y % TILE_SIZE *
+	d->txt[d->index].width / TILE_SIZE);
 }
 
-int		washitvertical(t_data *t)
+int		was_hitvert(t_data *d)
 {
-	if (!t->raycast.washitvertical)
-		return is_text_up_down(t);
+	if (!d->r_cst.was_hitvert)
+		return is_text_up_down(d);
 	else
-		return is_text_left_right(t);
+		return is_text_left_right(d);
 }
 
-void	render3DProjectedWalls(t_data *t, int i)
+void	render3DProjectedWalls(t_data *d, int i)
 {
-	// loop every ray in the array of rays
-	int start;
-	int end;
+	int j;
 
-	t->raycast.raydistance = t->raycast.distance *
-							 cos(t->raycast.rayangle - t->player.rotationAngle);
-
-	// calculate the distance to the projection plane
-	t->raycast.distancebprojectionplane = (t->win_w / 2) /
-										  tan(FOV_ANGLE / 2);
-
-	// projected wall height
-	t->raycast.wallstripheight = (TILE_SIZE / t->raycast.raydistance) *
-								 t->raycast.distancebprojectionplane;
-
-	start = t->win_h / 2 - t->raycast.wallstripheight / 2;
-	end = t->win_h / 2 + t->raycast.wallstripheight / 2;
-
-	int xtex = washitvertical(t);
-
-	// dist_to_spr(t);
-
-	// int xtex = (int)t->raycast.wallHitY % TILE_SIZE * t->txt[t->index].width / TILE_SIZE;
-	int color = 0;
-	int j = 0;
-	int ytex;
-	if (start < 0)
-		j += -start;
-	if (end > t->win_h)
+	d->r_cst.raydist = d->r_cst.dist * cos(d->r_cst.rayangle - d->p.rot_an);
+	d->r_cst.distbprojectplane = (d->win_w / 2) / tan(FOV_ANGLE / 2);
+	d->r_cst.wallstripheight = (TILE_SIZE / d->r_cst.raydist) *
+	d->r_cst.distbprojectplane;
+	d->rndr.start = d->win_h / 2 - d->r_cst.wallstripheight / 2;
+	d->rndr.end = d->win_h / 2 + d->r_cst.wallstripheight / 2;
+	d->rndr.xtex = was_hitvert(d);
+	d->rndr.color = 0;
+	j = 0;
+	if (d->rndr.start < 0)
+		j += -d->rndr.start;
+	if (d->rndr.end > d->win_h)
 	{
-		end = t->win_h;
-		start = 0;
+		d->rndr.end = d->win_h;
+		d->rndr.start = 0;
 	}
-	while (start < end)
+	while (d->rndr.start < d->rndr.end)
 	{
-		ytex = j * ((double)t->txt[t->index].height / (double)t->raycast.wallstripheight);
-		color = t->txt[t->index].data[ytex * t->txt[t->index].width + xtex];
-		// int color2 = t->spr[0].data_spr[ytex * t->spr[0].width + xtex];
-		if (start >= 0 && start < t->win_h)
+		d->rndr.ytex = j * ((double)d->txt[d->index].height /
+		(double)d->r_cst.wallstripheight);
+		d->rndr.color = d->txt[d->index].data[d->rndr.ytex *
+		d->txt[d->index].width + d->rndr.xtex];
+		if (d->rndr.start >= 0 && d->rndr.start < d->win_h)
 		{
-			t->load_data[(t->win_w * start) + i] = color; //t->txt[0].data[(143 + j)];
-			// t->load_data[(t->win_w * start) + i] = color2; //t->txt[0].data[(143 + j)];
+			d->load_data[(d->win_w * d->rndr.start) + i] = d->rndr.color;
 			j++;
 		}
-		start++;
+		d->rndr.start++;
 	}
-	// rect(t,
-	// 	 i,
-	// 	 (t->win_h / 2) - (wallStripHeight / 2),
-	// 	 WALL_STRIP_WIDTH,
-	// 	 wallStripHeight,
-	// 	 0xff00ff);
 }

@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 14:58:15 by abdel-ke          #+#    #+#             */
-/*   Updated: 2020/12/13 16:59:02 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/04 10:47:40 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	dist_to_spr(t_data *t)
 	puts("ok");
 	while (count < t->nbr_spr)
 	{
-		t->spr[count].dist_x = distanceBetweenPoints(t->player.player_x,
-		t->player.player_y, t->spr[count].spr_x, t->spr[count].spr_y);
-		// t->spr[count].dist_y = distanceBetweenPoints(t->player.player_x,
-		// t->player.player_y, t->spr[count].spr_x, t->spr[count].spr_y);
+		t->spr[count].dist_x = distBetweenPoints(t->p.pl_x,
+		t->p.pl_y, t->spr[count].spr_x, t->spr[count].spr_y);
+		// t->spr[count].dist_y = distBetweenPoints(t->player.pl_x,
+		// t->player.pl_y, t->spr[count].spr_x, t->spr[count].spr_y);
 		count++;
 	}
 }

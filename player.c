@@ -1,51 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 09:58:25 by abdel-ke          #+#    #+#             */
+/*   Updated: 2021/01/04 11:00:43 by abdel-ke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cube.h"
 
-void initial_player(t_data *t)
+void	initial_player(t_data *d)
 {
-	t->player.radius = TILE_SIZE * 10 / 100 * MINI_MAP;
-	t->win_w = 1080;
-	t->win_h = 920;
-	t->num_rays = t->win_w / WALL_STRIP_WIDTH;
-	/* t->player.turnDirection = 0;
-	t->player.walkDirection = 0;
-	t->player.step_to_side_left = 0;
-	t->player.step_to_side_right = 0; */
-	t->player.rotationAngle = M_PI; //0.5235987756;
-	t->player.moveSpeed = 5.0;
-	t->player.rotationSpeed = 2 * (M_PI / 180);
-	t->nbr_spr = 0;
-	t->raycast.dist_ray = (int *)malloc(sizeof(t->raycast.dist_ray) * t->win_w);
-	find_player(t);
-	// puts("ok");
+	d->p.rad = TILE_SIZE * 10 / 100 * MINI_MAP;
+	d->win_w = 1080;
+	d->win_h = 920;
+	d->num_rays = d->win_w / WALL_STRIP_WIDTH;
+	d->p.rot_an = M_PI;
+	d->p.mv_spd = 5.0;
+	d->p.rot_spd = 2 * (M_PI / 180);
+	d->nbr_spr = 0;
+	d->r_cst.dist_ray = (int *)malloc(sizeof(d->r_cst.dist_ray) * d->win_w);
+	find_player(d);
 }
 
-void ddaa(t_data *t, int X0, int Y0, int X1, int Y1)
+void	ddaa(t_data *d, int X0, int Y0, int X1, int Y1)
 {
-	// calculate dx & dy
-	int dx = X1 - X0;
-	int dy = Y1 - Y0;
-
-	// calculate steps required for generating pixels
-	int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-
-	// calculate increment in x & y for each steps
-	float Xinc = dx / (float)steps;
-	float Yinc = dy / (float)steps;
-
-	// Put pixel for each step
-	float X = X0;
-	float Y = Y0;
-	for (int i = 0; i <= steps; i++)
+	d->dda.dx = X1 - X0;
+	d->dda.dy = Y1 - Y0;
+	d->dda.steps = abs(d->dda.dx) > abs(d->dda.dy) ?
+	abs(d->dda.dx) : abs(d->dda.dy);
+	d->dda.Xinc = d->dda.dx / (float)d->dda.steps;
+	d->dda.Yinc = d->dda.dy / (float)d->dda.steps;
+	d->dda.X = X0;
+	d->dda.Y = Y0;
+	for (int i = 0; i <= d->dda.steps; i++)
 	{
-		t->load_data[(int)Y * t->win_w + (int)X] = 0xf00f0f;
-		// mlx_pixel_put(t->mlx.mlx_ptr, t->mlx.win_ptr, X, Y, 0xF54561);
-		// putpixel (X,Y,RED);  // put pixel at (X,Y)
-		X += Xinc; // increment in x at each step
-		Y += Yinc; // increment in y at each step
+		d->load_data[(int)d->dda.Y * d->win_w + (int)d->dda.X] = 0xf00f0f;
+		d->dda.X += d->dda.Xinc;
+		d->dda.Y += d->dda.Yinc;
 	}
 }
 
-int isWallAt(int x, int y)
+int		isWallAt(int x, int y)
 {
 	int mapx, mapy;
 	mapx = x / TILE_SIZE;
@@ -57,112 +56,99 @@ int isWallAt(int x, int y)
 	return (0);
 }
 
-void update_player(t_data *t)
+void	update_player(t_data *d)
 {
-	t->player.rotationAngle += t->player.turnDirection * t->player.rotationSpeed;
-	double moveStep;
-	double moveStep1;
-	double newPlayerX;
-	double newPlayerY;
+	double mv_stp;
+	double mv_stp1;
+	double new_p_x;
+	double new_P_y;
 
-	if (t->player.walkDirection != 0)
+	d->p.rot_an += d->p.turn_dir * d->p.rot_spd;
+	if (d->p.walk_dir != 0)
 	{
-		moveStep = t->player.walkDirection * t->player.moveSpeed;
-		newPlayerX = t->player.player_x + cos(t->player.rotationAngle) * moveStep;
-		newPlayerY = t->player.player_y + sin(t->player.rotationAngle) * moveStep;
+		mv_stp = d->p.walk_dir * d->p.mv_spd;
+		new_p_x = d->p.pl_x + cos(d->p.rot_an) * mv_stp;
+		new_P_y = d->p.pl_y + sin(d->p.rot_an) * mv_stp;
 	}
-	if (t->player.step_to_side != 0)
+	if (d->p.st_side != 0)
 	{
-		moveStep1 = t->player.step_to_side * t->player.moveSpeed;
-		newPlayerX = t->player.player_x + cos(t->player.rotationAngle - (90 * M_PI / 180)) * moveStep1;
-		newPlayerY = t->player.player_y + sin(t->player.rotationAngle - (90 * M_PI / 180)) * moveStep1;
+		mv_stp1 = d->p.st_side * d->p.mv_spd;
+		new_p_x = d->p.pl_x + cos(d->p.rot_an - (90 * M_PI / 180)) * mv_stp1;
+		new_P_y = d->p.pl_y + sin(d->p.rot_an - (90 * M_PI / 180)) * mv_stp1;
 	}
-
-	if (!isWallAt(t->player.player_x, newPlayerY))
-		t->player.player_y = newPlayerY;
-	if (!isWallAt(newPlayerX, t->player.player_y))
-		t->player.player_x = newPlayerX;
-
-	/* if (!isWallAt(newPlayerX, newPlayerY))
-	{
-		t->player.player_x = newPlayerX;
-		t->player.player_y = newPlayerY;
-	} */
-	// find_sprit(t);
+	if (!isWallAt(d->p.pl_x, new_P_y))
+		d->p.pl_y = new_P_y;
+	if (!isWallAt(new_p_x, d->p.pl_y))
+		d->p.pl_x = new_p_x;
 }
 
-void circle(t_data *t, int tileX, int tileY)
+void	circle(t_data *d, int tileX, int tileY)
 {
-	double a = 0, x, y;
+	double a;
+	double x;
+	double y;
+
+	a = 0;
 	while (a <= M_PI * 2)
 	{
-		x = t->player.radius * cos(a) + tileX * MINI_MAP;
-		y = t->player.radius * sin(a) + tileY * MINI_MAP;
-		mlx_pixel_put(t->mlx.mlx_ptr, t->mlx.win_ptr, x, y, 0xff00ff);
-		// t->load_data[(int)y * t->win_w + (int)x] = 0xff0000;
+		x = d->p.rad * cos(a) + tileX * MINI_MAP;
+		y = d->p.rad * sin(a) + tileY * MINI_MAP;
+		mlx_pixel_put(d->mlx.mlx_ptr, d->mlx.win_ptr, x, y, 0xff00ff);
 		a += 0.01;
 	}
 }
 
-int keyPressed(int key, t_data *t)
+int		keyPressed(int key, t_data *d)
 {
-	t->player.walkDirection = 0;
-	t->player.turnDirection = 0;
-	t->player.step_to_side = 0;
-	if (key == UP_KEY) // up
-		t->player.walkDirection = 1;
-	if (key == DOWN_KEY) // down
-		t->player.walkDirection = -1;
-	if (key == RIGHT_KEY) //Right
-		t->player.turnDirection = 1;
-	if (key == LEFT_KEY) //Left
-		t->player.turnDirection = -1;
+	d->p.walk_dir = 0;
+	d->p.turn_dir = 0;
+	d->p.st_side = 0;
+	if (key == UP_KEY)
+		d->p.walk_dir = 1;
+	if (key == DOWN_KEY)
+		d->p.walk_dir = -1;
+	if (key == RIGHT_KEY)
+		d->p.turn_dir = 1;
+	if (key == LEFT_KEY)
+		d->p.turn_dir = -1;
 	if (key == A_KEY)
-		t->player.step_to_side = +1;
+		d->p.st_side = +1;
 	if (key == D_KEY)
-		t->player.step_to_side = -1;
-	if (key == QUIT_KEY) // Exit
+		d->p.st_side = -1;
+	if (key == QUIT_KEY)
 		exit(0);
-	//Draw(t);
 	return (0);
 }
 
-int keyRealease(int key, t_data *t)
+int		keyRealease(int key, t_data *d)
 {
-	if (key == UP_KEY) // up
-		t->player.walkDirection = 0;
-	if (key == DOWN_KEY) // down
-		t->player.walkDirection = 0;
-	if (key == RIGHT_KEY) //Right
-		t->player.turnDirection = 0;
-	if (key == LEFT_KEY) //Left
-		t->player.turnDirection = 0;
+	if (key == UP_KEY)
+		d->p.walk_dir = 0;
+	if (key == DOWN_KEY)
+		d->p.walk_dir = 0;
+	if (key == RIGHT_KEY)
+		d->p.turn_dir = 0;
+	if (key == LEFT_KEY)
+		d->p.turn_dir = 0;
 	if (key == A_KEY)
-		t->player.step_to_side = 0;
+		d->p.st_side = 0;
 	if (key == D_KEY)
-		t->player.step_to_side = 0;
-	// if (key == QUIT_KEY) // Exit
-	// exit(0);
-	// Draw(t);
+		d->p.st_side = 0;
 	return (0);
 }
 
-void put_player(t_data *t, int i, int j, double rotation)
+void	put_player(t_data *d, int i, int j, double rotation)
 {
-	t->player.rotationAngle = rotation;
-	t->player.player_y = i * TILE_SIZE + TILE_SIZE / 2;
-	t->player.player_x = j * TILE_SIZE + TILE_SIZE / 2;
+	d->p.rot_an = rotation;
+	d->p.pl_y = i * TILE_SIZE + TILE_SIZE / 2;
+	d->p.pl_x = j * TILE_SIZE + TILE_SIZE / 2;
 }
 
-int	number_sprite(t_data *t)
-{
-return (0);
-}
-
-void find_player(t_data *t)
+void	find_player(t_data *d)
 {
 	int i;
 	int j;
+
 	i = 0;
 	while (i < MAP_NUM_ROWS)
 	{
@@ -170,44 +156,46 @@ void find_player(t_data *t)
 		while (j < MAP_NUM_COLS)
 		{
 			if (map[i][j] == 'N')
-				put_player(t, i, j, 3 * M_PI / 2);
+				put_player(d, i, j, 3 * M_PI / 2);
 			else if (map[i][j] == 'W')
-				put_player(t, i, j, M_PI);
+				put_player(d, i, j, M_PI);
 			else if (map[i][j] == 'E')
-				put_player(t, i, j, 0);
+				put_player(d, i, j, 0);
 			else if (map[i][j] == 'S')
-				put_player(t, i, j, M_PI / 2);
+				put_player(d, i, j, M_PI / 2);
 			else if (map[i][j] == '2')
-				t->nbr_spr++;
+				d->nbr_spr++;
 			j++;
 		}
 		i++;
 	}
-	stock_pos_spr(t);
+	stock_pos_spr(d);
 }
 
-void sky_floor_color(t_data *t)
+void	sky_floor_color(t_data *d)
 {
-	int x = t->win_h / 2 * t->win_w;
-	int y = 0;
+	int x;
+	int y;
 
+	x = d->win_h / 2 * d->win_w;
+	y = 0;
 	while (y != x)
 	{
-		t->load_data[y] = 0x99ccff;
-		t->load_data[x + y++] = 0xcd8500;
+		d->load_data[y] = 0x99ccff;
+		d->load_data[x + y++] = 0xcd8500;
 	}
 }
 
-int Draw(t_data *t)
+int		Draw(t_data *d)
 {
-	mlx_destroy_image(t->mlx.mlx_ptr, t->load_img);
-	// mlx_clear_window(t->mlx.mlx_ptr, t->mlx.img_ptr);
-	t->load_img = mlx_new_image(t->mlx.mlx_ptr, t->win_w, t->win_h);
-	// mlx_clear_window(t->mlx.mlx_ptr, t->mlx.win_ptr);
-	update_player(t);
-	sky_floor_color(t);
-	castAllRays(t);
-	draw_map(t);
-	mlx_put_image_to_window(t->mlx.mlx_ptr, t->mlx.win_ptr, t->load_img, 0, 0);
+	mlx_destroy_image(d->mlx.mlx_ptr, d->load_img);
+	// mlx_clear_window(d->mlx.mlx_ptr, d->mlx.img_ptr);
+	d->load_img = mlx_new_image(d->mlx.mlx_ptr, d->win_w, d->win_h);
+	// mlx_clear_window(d->mlx.mlx_ptr, d->mlx.win_ptr);
+	update_player(d);
+	sky_floor_color(d);
+	castAllRays(d);
+	draw_map(d);
+	mlx_put_image_to_window(d->mlx.mlx_ptr, d->mlx.win_ptr, d->load_img, 0, 0);
 	return 0;
 }
