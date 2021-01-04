@@ -153,18 +153,18 @@ typedef struct data
 	double		num_rays;
 } t_data;
 
-char map[MAP_NUM_ROWS][MAP_NUM_COLS] = {
-	{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
-	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '1', '0', '1'},
-	{'1', '0', '0', '0', '0', '1', '2', '0', '0', '0', '0', '0', '1', '0', '1'},
-	{'1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '0', '1', '0', '1'},
-	{'1', '0', '0', '0', '0', '0', '2', '0', '0', '0', '1', '0', '1', '0', '1'},
-	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '1', '1', '0', '1'},
-	{'1', '0', '2', '0', '0', '0', 'N', '0', '0', '0', '0', '0', '0', '0', '1'},
-	{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-	{'1', '1', '1', '1', '1', '1', '0', '0', '0', '1', '1', '1', '1', '0', '1'},
-	{'1', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-	{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}};
+static char map[MAP_NUM_ROWS][MAP_NUM_COLS] = {
+{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '1', '0', '1'},
+{'1', '0', '0', '0', '0', '1', '2', '0', '0', '0', '0', '0', '1', '0', '1'},
+{'1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '0', '1', '0', '1'},
+{'1', '0', '0', '0', '0', '0', '2', '0', '0', '0', '1', '0', '1', '0', '1'},
+{'1', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '1'},
+{'1', '0', '0', '0', '0', '0', 'N', '0', '0', '0', '0', '0', '0', '0', '1'},
+{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
+{'1', '1', '1', '1', '1', '1', '0', '0', '0', '1', '1', '1', '1', '0', '1'},
+{'1', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
+{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}};
 
 void	initial_player(t_data *t);
 void	update_player(t_data *t);
@@ -173,17 +173,16 @@ void	find_player(t_data *t);
 void	square(t_data *t, int tileX, int tileY);
 void	draw_map(t_data *t);
 void	circle(t_data *t, int tileX, int tileY);
-void	ddaa(t_data *t, int X0, int Y0, int X1, int Y1);
-int		keyPressed(int key, t_data *t);
+void	ddaa(t_data *t, int X1, int Y1);
+int		keypressed(int key, t_data *t);
 void	cast(t_data *t);
 void	castAllRays(t_data *t);
 double	hasWallAt(double x, double y);
 double	normalizeAngle(double angle);
-int		isWallAt(int x, int y);
+int		iswallat(int x, int y);
 void	render3DProjectedWalls(t_data *t, int i);
 double	distBetweenPoints(double x1, double y1, double x2, double y2);
 void	dist_to_spr(t_data *t);
-void	find_sprit(t_data *cube);
 void	ft_sort_sprite(t_data *cube, double spx, double spy, int count);
 double	ft_diffangle(double diffangle);
 int		sprite_visible(t_data *cube, int sprite_indice);
@@ -194,8 +193,9 @@ void	draw_sprite(t_data *cube, int count);
 void	find_sprit(t_data *cube);
 void	main_texture(t_data *t);
 void	stock_pos_spr(t_data *t);
+void	sky_floor_color(t_data *d);
+void	put_player(t_data *d, int i, int j, double rotation);
 
-int		keyRealease(int key, t_data *t);
-int		close_win(t_data *t);
-
+int		keyrealease(int key, t_data *t);
+int		close_win();
 #endif

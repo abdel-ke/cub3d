@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 14:25:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/04 11:37:46 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/04 19:39:42 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	find_horizontall_wall(t_data *d)
 	d->r_cst.nexthorztouchy >= 0 && d->r_cst.nexthorztouchy <=
 	TILE_SIZE * MAP_NUM_ROWS)
 	{
-		if (isWallAt(d->r_cst.nexthorztouchx,
+		if (iswallat(d->r_cst.nexthorztouchx,
 		d->r_cst.nexthorztouchy - d->r_cst.is_ray_up) == 1)
 		{
 			d->r_cst.founhorzwallhit = 1;
@@ -109,7 +109,7 @@ void	find_vertical_wall(t_data *d)
 	while (d->r_cst.nextverttouchx >= 0 && d->r_cst.nextverttouchx <= TILE_SIZE * MAP_NUM_COLS &&
 		   d->r_cst.nextverttouchy >= 0 && d->r_cst.nextverttouchy <= TILE_SIZE * MAP_NUM_ROWS)
 	{
-		if (isWallAt(d->r_cst.nextverttouchx - d->r_cst.is_ray_lft, d->r_cst.nextverttouchy) == 1)
+		if (iswallat(d->r_cst.nextverttouchx - d->r_cst.is_ray_lft, d->r_cst.nextverttouchy) == 1)
 		{
 			d->r_cst.founvertwallhit = 1;
 			d->r_cst.vertwallhit_x = d->r_cst.nextverttouchx;
@@ -148,8 +148,7 @@ void	cast(t_data *d)
 	find_horizontall_wall(d);
 	find_vertical_wall(d);
 	calculate(d);
-	ddaa(d, d->p.pl_x * MINI_MAP, d->p.pl_y * MINI_MAP,
-	d->r_cst.wallhit_x * MINI_MAP, d->r_cst.wallhit_y * MINI_MAP);
+	ddaa(d,	d->r_cst.wallhit_x * MINI_MAP, d->r_cst.wallhit_y * MINI_MAP);
 }
 
 void	castAllRays(t_data *d)

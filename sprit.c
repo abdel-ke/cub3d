@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:38:26 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/04 11:41:12 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/04 19:51:46 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,21 @@ void	drow_strips(t_data *t, int s_x, int i, int x)
 	start = -1;
 	y = 0;
 	start = (t->win_h / 2) - (t->spr->height / 2);
-	t->spr->end =  (t->win_h / 2) + (t->spr->height / 2);
+	t->spr->end = (t->win_h / 2) + (t->spr->height / 2);
 	if (start < 0)
 	{
 		y = -start;
 		start = -1;
 	}
 	xtext = x * (64 / (double)t->spr->height);
-	if (t->spr->end > t->win_h)
-		t->spr->end = t->win_h;
+	t->spr->end = t->spr->end > t->win_h ? t->win_h : t->spr->end;
 	while (++start < t->spr->end)
 	{
-		ytext = y * (64 / (double)t->spr->height);
+		ytext = y++ * (64 / (double)t->spr->height);
 		color = t->spr->data_spr[ytext * 64 + xtext];
 		if (t->r_cst.dist_ray[s_x] > t->spr[i].dist_x)
 			if (color != 0x00000)
 				t->load_data[start * t->win_w + s_x] = color;
-		y++;
 	}
 }
 
@@ -53,7 +51,7 @@ void	drowsprite(t_data *cube, int i)
 	cube->spr->height = (TILE_SIZE /
 	cube->spr[i].dist_x) * cube->r_cst.distbprojectplane;
 	cube->spr->end = (cube->win_h / 2) + (cube->spr->height / 2);
-	cube->spr->x_star_wind = (tan((FOV_ANGLE ) / 2)
+	cube->spr->x_star_wind = (tan((FOV_ANGLE) / 2)
 	* cube->r_cst.distbprojectplane) + (tan(cube->spr[i].spr_angle
 	- cube->p.rot_an) * cube->r_cst.distbprojectplane)
 	- (cube->spr->height / 2);
@@ -77,9 +75,7 @@ void	draw_sprite(t_data *cube, int count)
 	{
 		found_spr_angle(cube, i);
 		if (sprite_visible(cube, i) == 1)
-			{
-				drowsprite(cube, i);
-			}
+			drowsprite(cube, i);
 		i++;
 	}
 }

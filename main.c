@@ -1,17 +1,24 @@
-#include "cube.h"
-#include "map.c"
-#include "player.c"
-#include "raycaste.c"
-#include "texture.c"
-#include "sprit.c"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 19:05:38 by abdel-ke          #+#    #+#             */
+/*   Updated: 2021/01/04 19:41:00 by abdel-ke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int close_win(t_data *t)
+#include "cube.h"
+
+int		close_win(void)
 {
 	exit(0);
 	return (0);
 }
 
-int main()
+int		main(void)
 {
 	t_data t;
 
@@ -22,11 +29,11 @@ int main()
 	t.load_data = (int *)mlx_get_data_addr(t.load_img, &t.txt[0].bits_per_pixel,
 	&t.txt[0].size_line, &t.txt[0].endian);
 	main_texture(&t);
-	Draw(&t);
-	mlx_hook(t.mlx.win_ptr, 2, (1L << 0), keyPressed, &t);
-	mlx_hook(t.mlx.win_ptr, 3, (1L >> 0), keyRealease, &t);
+	draw(&t);
+	mlx_hook(t.mlx.win_ptr, 2, (1L << 0), keypressed, &t);
+	mlx_hook(t.mlx.win_ptr, 3, (1L >> 0), keyrealease, &t);
 	mlx_hook(t.mlx.win_ptr, 17, 1L << 5, &close_win, &t);
-	mlx_loop_hook(t.mlx.mlx_ptr, Draw, &t);
+	mlx_loop_hook(t.mlx.mlx_ptr, draw, &t);
 	mlx_loop(t.mlx.mlx_ptr);
 	return (0);
 }
