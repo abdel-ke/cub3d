@@ -1,7 +1,5 @@
 NO ./textures/NO.xpm
 
-C 135, 245, 0
-
 SO ./textures/SO.xpm
 EA ./textures/EA.xpm
 R 16000 09000
@@ -9,6 +7,7 @@ WE ./textures/WE.xpm
 
 S ./textures/barrel.xpm
 
+C 135, 245, 0
 F 204,24         , 0
 
 

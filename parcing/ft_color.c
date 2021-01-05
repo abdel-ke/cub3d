@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:16:26 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/04 17:05:49 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/05 16:06:34 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,12 @@ void	check_comma(char *line, int count)
 	}
 }
 
-void	ft_check_atoi(char *line)
+void	ft_check_atoi(char *line, int i)
 {
 	char	**check;
-	int i;
-	int start;
-	int end;
+	int		start;
+	int		end;
 
-	i = 0;
 	check = ft_split(line, ',');
 	while (check[i])
 	{
@@ -71,7 +69,7 @@ void	ft_check_atoi(char *line)
 
 void	ft_color(t_parcing *p, char *line, int c_f)
 {
-	ft_check_atoi(line);
+	ft_check_atoi(line, 0);
 	p->file_args++;
 	while (*line == ' ')
 		line++;

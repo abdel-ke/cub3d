@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:20:48 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/03 20:22:17 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/05 16:13:32 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	ft_stock_map(t_parcing *p, char *line)
 {
 	int	size;
 
+	if (map_is_last(p))
+		ft_error("MAP IS NOT LAST AT FILE");
 	p->map.nbr_rows++;
 	if ((size = ft_strlen(line)) > p->map.nbr_cols)
 		p->map.nbr_cols = size;

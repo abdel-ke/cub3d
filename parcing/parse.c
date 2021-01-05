@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 14:28:15 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/04 16:17:10 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/05 16:16:12 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,7 @@ void	ft_parse(t_parcing *p, int ac, char **av)
 		else if ((line[0] == 'F' || line[0] == 'C') && line[1] == ' ')
 			ft_get_color(p, line);
 		else if (mapsearsh(line))
-		{
-			if (map_is_last(p))
-				ft_error("MAP IS NOT LAST AT FILE");
 			ft_stock_map(p, line);
-		}
 	}
 	ft_check_map(p);
 	map_out_line(p);

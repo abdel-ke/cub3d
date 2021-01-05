@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 13:52:11 by amouhtal          #+#    #+#             */
-/*   Updated: 2021/01/04 16:15:23 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/05 16:07:24 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int		get_next_line(int fd, char **line)
 	static char	*rest;
 	int			j;
 	char		*ptr;
+
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 4864 || read(fd, NULL, 0) < 0
 		|| !line || !(buff = (char *)malloc((sizeof(char)) * BUFFER_SIZE + 1)))
 		return (-1);

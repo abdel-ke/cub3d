@@ -91,5 +91,5 @@ void 	table_free(char **tab);
 char	**ft_split(char const *s, char c);
 char	*ft_strtrim(char const *s1, char const *set);
 int		check(char c, char *set);
-void	ft_check_atoi(char *line);
+void	ft_check_atoi(char *line, int i);
 #endif
