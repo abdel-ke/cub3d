@@ -6,25 +6,11 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 09:58:25 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/04 19:40:01 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/05 18:19:18 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-void	initial_player(t_data *d)
-{
-	d->p.rad = TILE_SIZE * 10 / 100 * MINI_MAP;
-	d->win_w = 1080;
-	d->win_h = 920;
-	d->num_rays = d->win_w / WALL_STRIP_WIDTH;
-	d->p.rot_an = M_PI;
-	d->p.mv_spd = 5.0;
-	d->p.rot_spd = 2 * (M_PI / 180);
-	d->nbr_spr = 0;
-	d->r_cst.dist_ray = (int *)malloc(sizeof(d->r_cst.dist_ray) * d->win_w);
-	find_player(d);
-}
 
 int		iswallat(int x, int y)
 {
@@ -38,6 +24,41 @@ int		iswallat(int x, int y)
 	if (map[mapy][mapx] == '2')
 		return (2);
 	return (0);
+}
+
+void	put_player(t_data *d, int i, int j, double rotation)
+{
+	d->p.rot_an = rotation;
+	d->p.pl_y = i * TILE_SIZE + TILE_SIZE / 2;
+	d->p.pl_x = j * TILE_SIZE + TILE_SIZE / 2;
+}
+
+void	find_player(t_data *d)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < MAP_NUM_ROWS)
+	{
+		j = 0;
+		while (j < MAP_NUM_COLS)
+		{
+			if (map[i][j] == 'N')
+				put_player(d, i, j, 3 * M_PI / 2);
+			else if (map[i][j] == 'W')
+				put_player(d, i, j, M_PI);
+			else if (map[i][j] == 'E')
+				put_player(d, i, j, 0);
+			else if (map[i][j] == 'S')
+				put_player(d, i, j, M_PI / 2);
+			else if (map[i][j] == '2')
+				d->nbr_spr++;
+			j++;
+		}
+		i++;
+	}
+	stock_pos_spr(d);
 }
 
 void	update_player(t_data *d)
@@ -64,23 +85,4 @@ void	update_player(t_data *d)
 		d->p.pl_y = new_p_y;
 	if (!iswallat(new_p_x, d->p.pl_y))
 		d->p.pl_x = new_p_x;
-}
-
-void	put_player(t_data *d, int i, int j, double rotation)
-{
-	d->p.rot_an = rotation;
-	d->p.pl_y = i * TILE_SIZE + TILE_SIZE / 2;
-	d->p.pl_x = j * TILE_SIZE + TILE_SIZE / 2;
-}
-
-int		draw(t_data *d)
-{
-	mlx_destroy_image(d->mlx.mlx_ptr, d->load_img);
-	d->load_img = mlx_new_image(d->mlx.mlx_ptr, d->win_w, d->win_h);
-	update_player(d);
-	sky_floor_color(d);
-	castAllRays(d);
-	draw_map(d);
-	mlx_put_image_to_window(d->mlx.mlx_ptr, d->mlx.win_ptr, d->load_img, 0, 0);
-	return (0);
 }

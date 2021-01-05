@@ -176,12 +176,12 @@ void	circle(t_data *t, int tileX, int tileY);
 void	ddaa(t_data *t, int X1, int Y1);
 int		keypressed(int key, t_data *t);
 void	cast(t_data *t);
-void	castAllRays(t_data *t);
+void	castallrays(t_data *t);
 double	hasWallAt(double x, double y);
-double	normalizeAngle(double angle);
+double	normalizeangle(double angle);
 int		iswallat(int x, int y);
-void	render3DProjectedWalls(t_data *t, int i);
-double	distBetweenPoints(double x1, double y1, double x2, double y2);
+void	render3dprojectedwalls(t_data *t, int i, int j);
+double	distbetweenpoints(double x1, double y1, double x2, double y2);
 void	dist_to_spr(t_data *t);
 void	ft_sort_sprite(t_data *cube, double spx, double spy, int count);
 double	ft_diffangle(double diffangle);
@@ -198,4 +198,15 @@ void	put_player(t_data *d, int i, int j, double rotation);
 
 int		keyrealease(int key, t_data *t);
 int		close_win();
+
+void	find_horz_wall(t_data *d);
+void	find_vert_wall(t_data *d);
+int		is_text_up_down(t_data *d);
+int		is_text_left_right(t_data *d);
+void	init_ray(t_data *d);
+void	calculate(t_data *d);
+int		was_hitvert(t_data *d);
+void	find_horizontall_wall(t_data *d);
+void	find_vertical_wall(t_data *d);
+
 #endif

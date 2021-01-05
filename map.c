@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 17:10:09 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/04 19:32:36 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/05 18:10:09 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,16 @@ void	draw_map(t_data *t)
 		i++;
 	}
 	circle(t, t->p.pl_x, t->p.pl_y);
+}
+
+int		draw(t_data *d)
+{
+	mlx_destroy_image(d->mlx.mlx_ptr, d->load_img);
+	d->load_img = mlx_new_image(d->mlx.mlx_ptr, d->win_w, d->win_h);
+	update_player(d);
+	sky_floor_color(d);
+	castallrays(d);
+	draw_map(d);
+	mlx_put_image_to_window(d->mlx.mlx_ptr, d->mlx.win_ptr, d->load_img, 0, 0);
+	return (0);
 }

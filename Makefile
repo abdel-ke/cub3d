@@ -6,12 +6,12 @@ SRC = 	main.c\
 		map.c\
 		player.c\
 		raycaste.c\
-		sprite.c\
 		sprite_util.c\
 		texture.c\
 		sprit.c\
 		keypress.c\
-		utils.c
+		cast.c\
+
 
 OBJ = $(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 17:10:47 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/04 17:10:48 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/05 18:03:53 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,17 @@ void	found_spr_angle(t_data *cube, int i)
 			(M_PI * 2) + spriteangle;
 	else
 		cube->spr[i].spr_angle = spriteangle;
+}
+
+void	dist_to_spr(t_data *t)
+{
+	int count;
+
+	count = 0;
+	while (count < t->nbr_spr)
+	{
+		t->spr[count].dist_x = distbetweenpoints(t->p.pl_x,
+		t->p.pl_y, t->spr[count].spr_x, t->spr[count].spr_y);
+		count++;
+	}
 }

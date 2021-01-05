@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:38:26 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/04 19:51:46 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/05 18:03:53 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	draw_sprite(t_data *cube, int count)
 	int i;
 
 	i = 0;
-	cube->p.rot_an = normalizeAngle(cube->p.rot_an);
+	cube->p.rot_an = normalizeangle(cube->p.rot_an);
 	while (i < count)
 	{
 		found_spr_angle(cube, i);
@@ -114,7 +114,7 @@ void	find_sprit(t_data *cube)
 	while (count < cube->nbr_spr)
 	{
 		cube->spr[count].dist_x =
-		distBetweenPoints(cube->spr[count].spr_x,
+		distbetweenpoints(cube->spr[count].spr_x,
 		cube->spr[count].spr_y, cube->p.pl_x,
 		cube->p.pl_y);
 		count++;
