@@ -5,13 +5,10 @@ S    ./textures/mushroom.xpm
 NO     ./textures/NO.xpm
 SO     ./textures/SO.xpm
 
-C  50,   30 ,   110
+C  50,   3 0 ,   110
 WE ./textures/WE.xpm
 
 F 15 ,   100 ,   20
-
-
-
 
 EA     ./textures/EA.xpm
                             111111111111111111111

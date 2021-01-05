@@ -1,7 +1,7 @@
-NAME = cube3d
-
-NAMA = cub.a
-
+NAME = Cub3D
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra
+# LDFLAGS =  -lmlx -framework OpenGL -framework AppKit
 SRC = 	ft_atoi.c\
 		ft_color.c\
 		ft_error.c\
@@ -16,23 +16,23 @@ SRC = 	ft_atoi.c\
 		main.c\
 		parse.c
 
-OBJ=$(SRC:.c=.o)
-
-CFLAGS = -Wall -Wextra -Werror
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@ar rcs $(NAMA) $(OBJ)
-	gcc $(CFLAGS) $(NAMA) -o $(NAME)
-	@echo 'SUCCESS!'
+	$(CC) -o $@ $^ $(LDFLAGS)
+%.o : %.c
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	@rm -f $(OBJ) *.a
+	@rm -f $(OBJ)
 
 fclean: clean
 	@rm -f $(NAME)
-	@rm -f $(NAMA)
 
 re: fclean all
+
+
+
 

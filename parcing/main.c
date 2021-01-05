@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 20:23:07 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/03 20:23:36 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/04 17:05:17 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int main(int ac, char **av)
 {
 	int i;
 
+	i = 0;
 	t_parcing p;
 	initial(&p);
 	ft_parse(&p, ac, av);

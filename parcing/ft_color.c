@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:16:26 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/03 22:07:14 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/04 17:05:49 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,21 @@ void	ft_check_atoi(char *line)
 	int end;
 
 	i = 0;
-	start = 0;
 	check = ft_split(line, ',');
 	while (check[i])
 	{
+		start = 0;
 		while (check[i][start] == ' ')
 			start++;
 		end = ft_strlen(check[i]) - 1;
 		while (check[i][end] == ' ')
 			end--;
-		while (start < end)
+		while (start <= end)
 		{
 			if (check[i][start] < '0' || check[i][start] > '9')
 			{
 				free(check);
-				ft_error("error\nCHECK COLOR");
+				ft_error("error\nCHECK THE COLOR");
 			}
 			start++;
 		}

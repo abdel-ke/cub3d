@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 14:28:15 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/03 20:24:49 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/04 16:17:10 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_parse(t_parcing *p, int ac, char **av)
 	int		fd;
 	char	*line;
 
-	if (ac < 1 || (fd = open(av[1], O_RDONLY)) == -1)
+	if ((fd = open(av[1], O_RDONLY)) == -1 || ac < 1)
 		ft_putchar("check arguments\n");
 	while (get_next_line(fd, &line) > 0)
 	{
