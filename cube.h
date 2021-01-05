@@ -208,5 +208,6 @@ void	calculate(t_data *d);
 int		was_hitvert(t_data *d);
 void	find_horizontall_wall(t_data *d);
 void	find_vertical_wall(t_data *d);
+void	draw_projected_wall(t_data *d, int i, int j);
 
 #endif

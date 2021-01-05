@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 09:58:25 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/05 18:19:18 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/05 18:35:19 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,9 @@ void	update_player(t_data *d)
 		d->p.pl_y = new_p_y;
 	if (!iswallat(new_p_x, d->p.pl_y))
 		d->p.pl_x = new_p_x;
+}
+
+double	distbetweenpoints(double x1, double y1, double x2, double y2)
+{
+	return (sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
 }

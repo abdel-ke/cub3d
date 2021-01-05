@@ -6,16 +6,11 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:39:34 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/05 18:18:09 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/05 18:35:14 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-double	distbetweenpoints(double x1, double y1, double x2, double y2)
-{
-	return (sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
-}
 
 void	cast(t_data *d)
 {
@@ -61,19 +56,8 @@ void	calculate(t_data *d)
 	d->r_cst.was_hitvert = (d->r_cst.verthitdist < d->r_cst.horzhitdist);
 }
 
-void	render3dprojectedwalls(t_data *d, int i, int j)
+void	draw_projected_wall(t_data *d, int i, int j)
 {
-	d->r_cst.raydist = d->r_cst.dist * cos(d->r_cst.rayangle - d->p.rot_an);
-	d->r_cst.distbprojectplane = (d->win_w / 2) / tan(FOV_ANGLE / 2);
-	d->r_cst.wallstripheight = (TILE_SIZE / d->r_cst.raydist) *
-	d->r_cst.distbprojectplane;
-	d->rndr.start = d->win_h / 2 - d->r_cst.wallstripheight / 2;
-	d->rndr.end = d->win_h / 2 + d->r_cst.wallstripheight / 2;
-	d->rndr.xtex = was_hitvert(d);
-	d->rndr.color = 0;
-	j = d->rndr.start < 0 ? j += -d->rndr.start : j;
-	d->rndr.end = d->rndr.end > d->win_h ? d->win_h : d->rndr.end;
-	d->rndr.start = d->rndr.end > d->win_h ? 0 : d->rndr.start;
 	while (d->rndr.start < d->rndr.end)
 	{
 		d->rndr.ytex = j * ((double)d->txt[d->index].height /
@@ -87,4 +71,24 @@ void	render3dprojectedwalls(t_data *d, int i, int j)
 		}
 		d->rndr.start++;
 	}
+}
+
+void	render3dprojectedwalls(t_data *d, int i, int j)
+{
+	d->r_cst.raydist = d->r_cst.dist * cos(d->r_cst.rayangle - d->p.rot_an);
+	d->r_cst.distbprojectplane = (d->win_w / 2) / tan(FOV_ANGLE / 2);
+	d->r_cst.wallstripheight = (TILE_SIZE / d->r_cst.raydist) *
+	d->r_cst.distbprojectplane;
+	d->rndr.start = d->win_h / 2 - d->r_cst.wallstripheight / 2;
+	d->rndr.end = d->win_h / 2 + d->r_cst.wallstripheight / 2;
+	d->rndr.xtex = was_hitvert(d);
+	d->rndr.color = 0;
+	if (d->rndr.start < 0)
+		j += -d->rndr.start;
+	if (d->rndr.end > d->win_h)
+	{
+		d->rndr.end = d->win_h;
+		d->rndr.start = 0;
+	}
+	draw_projected_wall(d, i, j);
 }
