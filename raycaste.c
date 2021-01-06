@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 14:25:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/05 18:01:41 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/06 15:49:02 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	find_horz_wall(t_data *d)
 	while (d->r_cst.nexthorztouchx >= 0 &&
 	d->r_cst.nexthorztouchx <= TILE_SIZE * MAP_NUM_COLS &&
 	d->r_cst.nexthorztouchy >= 0 && d->r_cst.nexthorztouchy <=
-	TILE_SIZE * MAP_NUM_ROWS)
+	TILE_SIZE * d->parse.map.nbr_rows)
 	{
-		if (iswallat(d->r_cst.nexthorztouchx,
+		if (iswallat(d, d->r_cst.nexthorztouchx,
 		d->r_cst.nexthorztouchy - d->r_cst.is_ray_up) == 1)
 		{
 			d->r_cst.founhorzwallhit = 1;
@@ -40,9 +40,9 @@ void	find_vert_wall(t_data *d)
 	while (d->r_cst.nextverttouchx >= 0 &&
 	d->r_cst.nextverttouchx <= TILE_SIZE * MAP_NUM_COLS &&
 	d->r_cst.nextverttouchy >= 0 && d->r_cst.nextverttouchy <=
-	TILE_SIZE * MAP_NUM_ROWS)
+	TILE_SIZE * d->parse.map.nbr_rows)
 	{
-		if (iswallat(d->r_cst.nextverttouchx - d->r_cst.is_ray_lft,
+		if (iswallat(d, d->r_cst.nextverttouchx - d->r_cst.is_ray_lft,
 		d->r_cst.nextverttouchy) == 1)
 		{
 			d->r_cst.founvertwallhit = 1;

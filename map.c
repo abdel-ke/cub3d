@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 17:10:09 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/06 09:00:46 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/06 18:55:53 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,15 @@ void	draw_map(t_data *t)
 	int tile_y;
 
 	i = 0;
-	while (i < MAP_NUM_ROWS)
+	while (i < t->parse.map.nbr_rows)
 	{
 		j = 0;
-		while (j < MAP_NUM_COLS)
+		while (j < t->parse.map.nbr_cols)
 		{
 			tile_x = j * TILE_SIZE * MINI_MAP;
 			tile_y = i * TILE_SIZE * MINI_MAP;
-			if (map[i][j] == '1')
+			// if (map[i][j] == '1')
+			if (t->parse.map.map[i][j] == '1')
 				square(t, (int)tile_x, (int)tile_y);
 			j++;
 		}

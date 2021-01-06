@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:00:06 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/03 17:29:58 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/06 15:33:34 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,27 @@ int		check_space(char *line)
 	return (i);
 }
 
-char	*ft_get_texture(char *line)
+char	*ft_get_texture(char *line, int n)
 {
-	int		len;
 	char	*path;
+	int		start;
+	int		end;
+	int		i;
 
-	path = ft_strdup(&line[check_space(line + 2)]);
-	len = ft_strlen(path) - 1;
-	while (line[len] == ' ' || line[len] == '\t')
-		len--;
-	if (open(path + 3, O_RDONLY) == -1 || path[len] != 'm' ||
-	path[len - 1] != 'p' || path[len - 2] != 'x')
+	start = n;
+	i = 0;
+	while (line[start] == ' ' || line[start] == '\t')
+		start++;
+	end = ft_strlen(line) - 1;
+	while (line[end] == ' ' || line[end] == '\t')
+		end--;
+	path = malloc(sizeof(char) * (end++ - start) + 2);
+	// printf("[%d]\t[%d]\n", start, end);
+	while (start < end)
+		path[i++] = line[start++];
+	path[i] = '\0';
+	if (open(path, O_RDONLY) == -1 || path[i - 1] != 'm' ||
+	path[i - 2] != 'p' || path[i - 3] != 'x')
 	{
 		ft_putchar(path);
 		ft_error("\nPATH INVALID\n");
@@ -56,13 +66,13 @@ void	ft_check_texture(t_parcing *p, char *line)
 {
 	p->file_args++;
 	if (line[0] == 'S' && line[1] == 'O' && !p->south)
-		p->south = ft_get_texture(line);
+		p->south = ft_get_texture(line, 2);
 	else if (line[0] == 'N' && !p->north)
-		p->north = ft_get_texture(line);
+		p->north = ft_get_texture(line, 2);
 	else if (line[0] == 'W' && !p->west)
-		p->west = ft_get_texture(line);
+		p->west = ft_get_texture(line, 2);
 	else if (line[0] == 'E' && line[1] == 'A' && !p->east)
-		p->east = ft_get_texture(line);
+		p->east = ft_get_texture(line, 2);
 	else if (line[0] == 'S' && line[1] == ' ' && !p->s_path)
-		p->s_path = ft_get_texture(line);
+		p->s_path = ft_get_texture(line, 1);
 }

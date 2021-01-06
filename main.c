@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 19:05:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/06 09:14:21 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/06 18:56:09 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	initial_player(t_data *d)
 {
 	d->p.rad = TILE_SIZE * 10 / 100 * MINI_MAP;
-	d->win_w = 1080;
-	d->win_h = 920;
-	d->num_rays = d->win_w / WALL_STRIP_WIDTH;
+	d->win_w = d->parse.p_w;
+	d->win_h = d->parse.p_h;
+	d->num_rays = d->win_w;
 	d->p.rot_an = M_PI;
 	d->p.mv_spd = 5.0;
 	d->p.rot_spd = 2 * (M_PI / 180);
@@ -52,9 +52,6 @@ void	init_ray(t_data *d)
 
 int		keypressed(int key, t_data *d)
 {
-	d->p.walk_dir = 0;
-	d->p.turn_dir = 0;
-	d->p.st_side = 0;
 	if (key == W_KEY)
 		d->p.walk_dir = 1;
 	if (key == S_KEY)
@@ -78,10 +75,11 @@ int		close_win(void)
 	return (0);
 }
 
-int		main(void)
+int		main(int ac, char **av)
 {
 	t_data t;
 
+	ft_parse(&t.parse, ac, av);
 	initial_player(&t);
 	t.mlx.mlx_ptr = mlx_init();
 	t.mlx.win_ptr = mlx_new_window(t.mlx.mlx_ptr, t.win_w, t.win_h, "cube 3d");

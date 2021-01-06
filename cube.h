@@ -7,7 +7,7 @@
 #include <mlx.h>
 #include "parcing/cub.h"
 
-#define TILE_SIZE 96
+#define TILE_SIZE 64
 #define MAP_NUM_ROWS 11
 #define MAP_NUM_COLS 15
 #define UP_KEY 126
@@ -24,9 +24,8 @@
 #define W 2
 #define E 3
 #define FOV_ANGLE 60 * (M_PI / 180)
-#define WALL_STRIP_WIDTH 1
-#define NUM_RAYS 1440 / WALL_STRIP_WIDTH
-#define MINI_MAP 0.2
+#define NUM_RAYS 1440
+#define MINI_MAP 0.1
 
 typedef struct s_mlx
 {
@@ -155,19 +154,6 @@ typedef struct data
 	double		num_rays;
 } t_data;
 
-static char map[MAP_NUM_ROWS][MAP_NUM_COLS] = {
-{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
-{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '1', '0', '1'},
-{'1', '0', '0', '0', '0', '1', '2', '0', '0', '0', '0', '0', '1', '0', '1'},
-{'1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '0', '1', '0', '1'},
-{'1', '0', '0', '0', '0', '0', '2', '0', '0', '0', '1', '0', '1', '0', '1'},
-{'1', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '1'},
-{'1', '0', '0', '0', '0', '0', 'N', '0', '0', '0', '0', '0', '0', '0', '1'},
-{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-{'1', '1', '1', '1', '1', '1', '0', '0', '0', '1', '1', '1', '1', '0', '1'},
-{'1', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}};
-
 void	initial_player(t_data *t);
 void	update_player(t_data *t);
 int		draw(t_data *t);
@@ -181,7 +167,7 @@ void	cast(t_data *t);
 void	castallrays(t_data *t);
 double	hasWallAt(double x, double y);
 double	normalizeangle(double angle);
-int		iswallat(int x, int y);
+int		iswallat(t_data *d, int x, int y);
 void	render3dprojectedwalls(t_data *t, int i, int j);
 double	distbetweenpoints(double x1, double y1, double x2, double y2);
 void	dist_to_spr(t_data *t);

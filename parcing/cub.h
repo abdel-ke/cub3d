@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:22:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/05 16:25:46 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/06 15:26:27 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ unsigned long long	ft_atoi2(const char *str);
 unsigned long long	ft_atoi(const char *str);
 int					ft_check_textures(char *line);
 void				ft_check_texture(t_parcing *p, char *line);
-char				*ft_get_texture(char *line);
+char				*ft_get_texture(char *line, int n);
 int					check_space(char *line);
 void				ft_get_color(t_parcing *p, char *line);
 void				check_comma(char *line, int count);

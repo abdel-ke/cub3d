@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:39:34 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/05 18:35:14 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/06 19:01:30 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	castallrays(t_data *d)
 
 	i = 0;
 	d->r_cst.rayangle = d->p.rot_an - (FOV_ANGLE / 2);
-	while (i < d->num_rays)
+	while (i < d->parse.p_w)
 	{
 		cast(d);
 		d->r_cst.dist_ray[i] = d->r_cst.dist;
 		render3dprojectedwalls(d, i, 0);
-		d->r_cst.rayangle += (FOV_ANGLE / (d->num_rays));
+		d->r_cst.rayangle += (FOV_ANGLE / (d->parse.p_w));
 		i++;
 	}
 	find_sprit(d);
@@ -54,6 +54,7 @@ void	calculate(t_data *d)
 	d->r_cst.dist = (d->r_cst.horzhitdist < d->r_cst.verthitdist) ?
 	d->r_cst.horzhitdist : d->r_cst.verthitdist;
 	d->r_cst.was_hitvert = (d->r_cst.verthitdist < d->r_cst.horzhitdist);
+
 }
 
 void	draw_projected_wall(t_data *d, int i, int j)

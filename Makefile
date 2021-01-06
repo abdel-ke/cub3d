@@ -24,7 +24,6 @@ SRC = 	main.c\
 		parcing/get_next_line.c\
 		parcing/parse.c
 
-
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:38:26 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/05 18:03:53 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/06 15:46:15 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,13 @@ void	stock_pos_spr(t_data *t)
 	count = 0;
 	i = 0;
 	t->spr = malloc(sizeof(t_sprite) * t->nbr_spr);
-	while (i < MAP_NUM_ROWS)
+	while (i < t->parse.map.nbr_rows)
 	{
 		j = 0;
-		while (j < MAP_NUM_COLS)
+		while (j < t->parse.map.nbr_cols)
 		{
-			if (map[i][j] == '2')
+			// if (map[i][j] == '2')
+			if (t->parse.map.map[i][j] == '2')
 			{
 				t->spr[count].spr_x = (TILE_SIZE * j) + TILE_SIZE / 2;
 				t->spr[count].spr_y = (TILE_SIZE * i) + TILE_SIZE / 2;

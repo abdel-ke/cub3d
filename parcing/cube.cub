@@ -1,20 +1,23 @@
-R 9999 9999
-S  ./textures/barrel.xpm
-WE ./textures/WE.xpm
-SO ./textures/SO.xpm
-EA ./textures/EA.xpm
-NO ./textures/NO.xpm
+NO ./parcing/textures/NO.xpm
+
+SO ./parcing/textures/SO.xpm
+EA ./parcing/textures/EA.xpm
+R 1080 0920
+WE ./parcing/textures/WE.xpm
+
+S ./parcing/textures/mushroom.xpm
+
 
 F 120,30,000
 C 020,0,10
 
 
-111111111111111
-110200020000011
-121000000000001
-120000000000001
-100000000000001
-111111000111111
+              111111111111111
+              110200020011111
+              11111S000000001
+              121110000000001
+11111111111111100000000111111
+111111000111111111111111
 100000100000001
 111111000111011
 111111000111111
