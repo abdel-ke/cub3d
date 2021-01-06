@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mlx.h>
+#include "parcing/cub.h"
 
 #define TILE_SIZE 96
 #define MAP_NUM_ROWS 11
@@ -13,7 +14,7 @@
 #define DOWN_KEY 125
 #define RIGHT_KEY 124
 #define LEFT_KEY 123
-#define Q_KEY 13
+#define W_KEY 13
 #define S_KEY 1
 #define D_KEY 2
 #define A_KEY 0
@@ -117,13 +118,13 @@ typedef struct s_sprite
 
 typedef struct	s_dda
 {
-	int dx;
-	int dy;
-	int steps;
-	float Xinc;
-	float Yinc;
-	float X;
-	float Y;
+	int		dx;
+	int		dy;
+	int		steps;
+	float	Xinc;
+	float	Yinc;
+	float	X;
+	float	Y;
 }				t_dda;
 
 typedef struct 	s_render
@@ -144,6 +145,7 @@ typedef struct data
 	t_sprite	*spr;
 	t_dda		dda;
 	t_render	rndr;
+	t_parcing	parse;
 	int			index;
 	int			*load_data;
 	void		*load_img;
