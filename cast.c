@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:39:34 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/06 19:01:30 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/07 19:16:21 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	calculate(t_data *d)
 	d->r_cst.dist = (d->r_cst.horzhitdist < d->r_cst.verthitdist) ?
 	d->r_cst.horzhitdist : d->r_cst.verthitdist;
 	d->r_cst.was_hitvert = (d->r_cst.verthitdist < d->r_cst.horzhitdist);
-
 }
 
 void	draw_projected_wall(t_data *d, int i, int j)
@@ -65,9 +64,9 @@ void	draw_projected_wall(t_data *d, int i, int j)
 		(double)d->r_cst.wallstripheight);
 		d->rndr.color = d->txt[d->index].data[d->rndr.ytex *
 		d->txt[d->index].width + d->rndr.xtex];
-		if (d->rndr.start >= 0 && d->rndr.start < d->win_h)
+		if (d->rndr.start >= 0 && d->rndr.start < d->parse.p_h)
 		{
-			d->load_data[(d->win_w * d->rndr.start) + i] = d->rndr.color;
+			d->load_data[(d->parse.p_w * d->rndr.start) + i] = d->rndr.color;
 			j++;
 		}
 		d->rndr.start++;
@@ -77,18 +76,18 @@ void	draw_projected_wall(t_data *d, int i, int j)
 void	render3dprojectedwalls(t_data *d, int i, int j)
 {
 	d->r_cst.raydist = d->r_cst.dist * cos(d->r_cst.rayangle - d->p.rot_an);
-	d->r_cst.distbprojectplane = (d->win_w / 2) / tan(FOV_ANGLE / 2);
+	d->r_cst.distbprojectplane = (d->parse.p_w / 2) / tan(FOV_ANGLE / 2);
 	d->r_cst.wallstripheight = (TILE_SIZE / d->r_cst.raydist) *
 	d->r_cst.distbprojectplane;
-	d->rndr.start = d->win_h / 2 - d->r_cst.wallstripheight / 2;
-	d->rndr.end = d->win_h / 2 + d->r_cst.wallstripheight / 2;
+	d->rndr.start = d->parse.p_h / 2 - d->r_cst.wallstripheight / 2;
+	d->rndr.end = d->parse.p_h / 2 + d->r_cst.wallstripheight / 2;
 	d->rndr.xtex = was_hitvert(d);
 	d->rndr.color = 0;
 	if (d->rndr.start < 0)
 		j += -d->rndr.start;
-	if (d->rndr.end > d->win_h)
+	if (d->rndr.end > d->parse.p_h)
 	{
-		d->rndr.end = d->win_h;
+		d->rndr.end = d->parse.p_h;
 		d->rndr.start = 0;
 	}
 	draw_projected_wall(d, i, j);

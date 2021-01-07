@@ -1,33 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cube.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 19:24:51 by abdel-ke          #+#    #+#             */
+/*   Updated: 2021/01/07 19:32:08 by abdel-ke         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUBE_H
-#define CUBE_H
+# define CUBE_H
+# include <math.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <mlx.h>
+# include "parcing/cub.h"
+# define TILE_SIZE 64
+# define MAP_NUM_ROWS 11
+# define MAP_NUM_COLS 15
+# define UP_KEY 126
+# define DOWN_KEY 125
+# define RIGHT_KEY 124
+# define LEFT_KEY 123
+# define W_KEY 13
+# define S_KEY 1
+# define D_KEY 2
+# define A_KEY 0
+# define QUIT_KEY 53
+# define N 0
+# define S 1
+# define W 2
+# define E 3
+# define FOV_ANGLE 1.0471975512
+# define NUM_RAYS 1440
+# define MINI_MAP 0.1
 
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <mlx.h>
-#include "parcing/cub.h"
-
-#define TILE_SIZE 64
-#define MAP_NUM_ROWS 11
-#define MAP_NUM_COLS 15
-#define UP_KEY 126
-#define DOWN_KEY 125
-#define RIGHT_KEY 124
-#define LEFT_KEY 123
-#define W_KEY 13
-#define S_KEY 1
-#define D_KEY 2
-#define A_KEY 0
-#define QUIT_KEY 53
-#define N 0
-#define S 1
-#define W 2
-#define E 3
-#define FOV_ANGLE 60 * (M_PI / 180)
-#define NUM_RAYS 1440
-#define MINI_MAP 0.1
-
-typedef struct s_mlx
+typedef struct	s_mlx
 {
 	void	*win_ptr;
 	void	*mlx_ptr;
@@ -36,9 +46,9 @@ typedef struct s_mlx
 	int		bits_per_pixel;
 	int		size_line;
 	int		endian;
-} t_mlx;
+}				t_mlx;
 
-typedef struct s_player
+typedef struct	s_player
 {
 	int		rad;
 	int		st_side;
@@ -49,9 +59,9 @@ typedef struct s_player
 	double	rot_spd;
 	double	pl_x;
 	double	pl_y;
-} t_player;
+}				t_player;
 
-typedef struct s_raycast
+typedef struct	s_raycast
 {
 	double	rayangle;
 	double	wallhit_x;
@@ -82,9 +92,9 @@ typedef struct s_raycast
 	double	distbprojectplane;
 	double	wallstripheight;
 	int		*dist_ray;
-} t_raycast;
+}				t_raycast;
 
-typedef struct s_texture
+typedef struct	s_texture
 {
 	void	*img;
 	int		*data;
@@ -95,16 +105,16 @@ typedef struct s_texture
 	int		endian;
 }				t_texture[5];
 
-typedef struct s_sprite
+typedef struct	s_sprite
 {
 	void	*img_spr;
 	int		*data_spr;
 	int		height;
 	int		height1;
 	int		width;
-	int 	bits_per_pixel;
-	int 	size_line;
-	int 	endian;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
 	double	spr_x;
 	double	spr_y;
 	double	dist_x;
@@ -120,22 +130,22 @@ typedef struct	s_dda
 	int		dx;
 	int		dy;
 	int		steps;
-	float	Xinc;
-	float	Yinc;
-	float	X;
-	float	Y;
+	float	xinc;
+	float	yinc;
+	float	x;
+	float	y;
 }				t_dda;
 
-typedef struct 	s_render
+typedef struct	s_render
 {
-	int start;
-	int end;
-	int xtex;
+	int	start;
+	int	end;
+	int	xtex;
 	int ytex;
-	int color;
+	int	color;
 }				t_render;
 
-typedef struct data
+typedef struct	s_data
 {
 	t_texture	txt;
 	t_mlx		mlx;
@@ -152,20 +162,19 @@ typedef struct data
 	int			win_h;
 	int			win_w;
 	double		num_rays;
-} t_data;
+}				t_data;
 
 void	initial_player(t_data *t);
 void	update_player(t_data *t);
 int		draw(t_data *t);
 void	find_player(t_data *t);
-void	square(t_data *t, int tileX, int tileY);
+void	square(t_data *t, int tilex, int tiley);
 void	draw_map(t_data *t);
-void	circle(t_data *t, int tileX, int tileY);
-void	ddaa(t_data *t, int X1, int Y1);
+void	circle(t_data *t, int tilex, int tiley);
+void	ddaa(t_data *t, int x1, int y1);
 int		keypressed(int key, t_data *t);
 void	cast(t_data *t);
 void	castallrays(t_data *t);
-double	hasWallAt(double x, double y);
 double	normalizeangle(double angle);
 int		iswallat(t_data *d, int x, int y);
 void	render3dprojectedwalls(t_data *t, int i, int j);
@@ -183,10 +192,8 @@ void	main_texture(t_data *t);
 void	stock_pos_spr(t_data *t);
 void	sky_floor_color(t_data *d);
 void	put_player(t_data *d, int i, int j, double rotation);
-
 int		keyrealease(int key, t_data *t);
 int		close_win();
-
 void	find_horz_wall(t_data *d);
 void	find_vert_wall(t_data *d);
 int		is_text_up_down(t_data *d);
@@ -197,5 +204,4 @@ int		was_hitvert(t_data *d);
 void	find_horizontall_wall(t_data *d);
 void	find_vertical_wall(t_data *d);
 void	render3dprojectedwalls(t_data *d, int i, int j);
-
 #endif

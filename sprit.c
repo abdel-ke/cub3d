@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:38:26 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/06 15:46:15 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/07 19:16:49 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,22 @@ void	drow_strips(t_data *t, int s_x, int i, int x)
 
 	start = -1;
 	y = 0;
-	start = (t->win_h / 2) - (t->spr->height / 2);
-	t->spr->end = (t->win_h / 2) + (t->spr->height / 2);
+	start = (t->parse.p_h / 2) - (t->spr->height / 2);
+	t->spr->end = (t->parse.p_h / 2) + (t->spr->height / 2);
 	if (start < 0)
 	{
 		y = -start;
 		start = -1;
 	}
 	xtext = x * (64 / (double)t->spr->height);
-	t->spr->end = t->spr->end > t->win_h ? t->win_h : t->spr->end;
+	t->spr->end = t->spr->end > t->parse.p_h ? t->parse.p_h : t->spr->end;
 	while (++start < t->spr->end)
 	{
 		ytext = y++ * (64 / (double)t->spr->height);
 		color = t->spr->data_spr[ytext * 64 + xtext];
 		if (t->r_cst.dist_ray[s_x] > t->spr[i].dist_x)
 			if (color != 0x00000)
-				t->load_data[start * t->win_w + s_x] = color;
+				t->load_data[start * t->parse.p_w + s_x] = color;
 	}
 }
 
@@ -50,7 +50,7 @@ void	drowsprite(t_data *cube, int i)
 	x = 0;
 	cube->spr->height = (TILE_SIZE /
 	cube->spr[i].dist_x) * cube->r_cst.distbprojectplane;
-	cube->spr->end = (cube->win_h / 2) + (cube->spr->height / 2);
+	cube->spr->end = (cube->parse.p_h / 2) + (cube->spr->height / 2);
 	cube->spr->x_star_wind = (tan((FOV_ANGLE) / 2)
 	* cube->r_cst.distbprojectplane) + (tan(cube->spr[i].spr_angle
 	- cube->p.rot_an) * cube->r_cst.distbprojectplane)
@@ -58,7 +58,7 @@ void	drowsprite(t_data *cube, int i)
 	while (x < cube->spr->height)
 	{
 		if (cube->spr->x_star_wind >= 0 &&
-		cube->spr->x_star_wind < cube->win_w)
+		cube->spr->x_star_wind < cube->parse.p_w)
 			drow_strips(cube, cube->spr->x_star_wind, i, x);
 		x++;
 		cube->spr->x_star_wind++;
@@ -94,7 +94,6 @@ void	stock_pos_spr(t_data *t)
 		j = 0;
 		while (j < t->parse.map.nbr_cols)
 		{
-			// if (map[i][j] == '2')
 			if (t->parse.map.map[i][j] == '2')
 			{
 				t->spr[count].spr_x = (TILE_SIZE * j) + TILE_SIZE / 2;

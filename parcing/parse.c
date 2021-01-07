@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 14:28:15 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/06 15:33:03 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/07 19:14:44 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	ft_parse(t_parcing *p, int ac, char **av)
 	{
 		if (line[0] == ' ' && p->file_args != 8)
 		{
-			// printf("|%d|\n", p->file_args);
 			ft_putchar(line);
 			ft_error("\nARG INVALID");
 		}

@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 14:25:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/06 15:49:02 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/07 19:18:07 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	find_horz_wall(t_data *d)
 {
 	while (d->r_cst.nexthorztouchx >= 0 &&
-	d->r_cst.nexthorztouchx <= TILE_SIZE * MAP_NUM_COLS &&
-	d->r_cst.nexthorztouchy >= 0 && d->r_cst.nexthorztouchy <=
+	d->r_cst.nexthorztouchx < TILE_SIZE * d->parse.map.nbr_cols &&
+	d->r_cst.nexthorztouchy >= 0 && d->r_cst.nexthorztouchy <
 	TILE_SIZE * d->parse.map.nbr_rows)
 	{
 		if (iswallat(d, d->r_cst.nexthorztouchx,
@@ -38,8 +38,8 @@ void	find_horz_wall(t_data *d)
 void	find_vert_wall(t_data *d)
 {
 	while (d->r_cst.nextverttouchx >= 0 &&
-	d->r_cst.nextverttouchx <= TILE_SIZE * MAP_NUM_COLS &&
-	d->r_cst.nextverttouchy >= 0 && d->r_cst.nextverttouchy <=
+	d->r_cst.nextverttouchx < TILE_SIZE * d->parse.map.nbr_cols &&
+	d->r_cst.nextverttouchy >= 0 && d->r_cst.nextverttouchy <
 	TILE_SIZE * d->parse.map.nbr_rows)
 	{
 		if (iswallat(d, d->r_cst.nextverttouchx - d->r_cst.is_ray_lft,

@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:00:06 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/06 15:33:34 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/07 19:14:32 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	*ft_get_texture(char *line, int n)
 	while (line[end] == ' ' || line[end] == '\t')
 		end--;
 	path = malloc(sizeof(char) * (end++ - start) + 2);
-	// printf("[%d]\t[%d]\n", start, end);
 	while (start < end)
 		path[i++] = line[start++];
 	path[i] = '\0';

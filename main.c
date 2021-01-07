@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 19:05:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/06 18:56:09 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/07 19:21:15 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 void	initial_player(t_data *d)
 {
 	d->p.rad = TILE_SIZE * 10 / 100 * MINI_MAP;
-	d->win_w = d->parse.p_w;
-	d->win_h = d->parse.p_h;
-	d->num_rays = d->win_w;
+	d->num_rays = d->parse.p_w;
 	d->p.rot_an = M_PI;
 	d->p.mv_spd = 5.0;
 	d->p.rot_spd = 2 * (M_PI / 180);
 	d->nbr_spr = 0;
-	d->r_cst.dist_ray = (int *)malloc(sizeof(d->r_cst.dist_ray) * d->win_w);
+	d->r_cst.dist_ray = (int *)malloc(sizeof(d->r_cst.dist_ray) * d->parse.p_w);
 	find_player(d);
 }
 
@@ -82,8 +80,9 @@ int		main(int ac, char **av)
 	ft_parse(&t.parse, ac, av);
 	initial_player(&t);
 	t.mlx.mlx_ptr = mlx_init();
-	t.mlx.win_ptr = mlx_new_window(t.mlx.mlx_ptr, t.win_w, t.win_h, "cube 3d");
-	t.load_img = mlx_new_image(t.mlx.mlx_ptr, t.win_w, t.win_h);
+	t.mlx.win_ptr = mlx_new_window(t.mlx.mlx_ptr, t.parse.p_w, t.parse.p_h,
+	"Cub3d");
+	t.load_img = mlx_new_image(t.mlx.mlx_ptr, t.parse.p_w, t.parse.p_h);
 	t.load_data = (int *)mlx_get_data_addr(t.load_img, &t.txt[0].bits_per_pixel,
 	&t.txt[0].size_line, &t.txt[0].endian);
 	main_texture(&t);
