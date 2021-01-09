@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/20 11:46:33 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/03 16:27:27 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/09 17:22:55 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	map_out_up_down(t_parcing *p, int pos)
 	while (start < end)
 	{
 		if (p->map.map[pos][start] != '1' && p->map.map[pos][start] != ' ')
-			ft_error("MAP OUT LIGNE");
+			ft_error("MAP INVALID", "");
 		start++;
 	}
 }
@@ -57,7 +57,7 @@ void	maperr(t_parcing *p)
 			(tmp[y][ft_strlen(tmp[y]) - 1] != '1' &&
 			tmp[y][ft_strlen(tmp[y]) - 1] != ' '))
 			{
-				ft_error("maperr");
+				ft_error("MAP INVALID", "");
 			}
 			y++;
 		}
@@ -82,10 +82,10 @@ void	mapcheck(t_parcing *p, char **tab)
 			{
 				if (i > 0)
 					if (tab[i - 1][j] != '1' && tab[i - 1][j] != ' ')
-						ft_error("Map");
+						ft_error("MAP INVALID", "");
 				if (i < p->map.nbr_rows - 1)
 					if (tab[i + 1][j] != '1' && tab[i + 1][j] != ' ')
-						ft_error("Map");
+						ft_error("MAP INVALID", "");
 			}
 			i++;
 		}

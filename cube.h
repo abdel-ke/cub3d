@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 19:24:51 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/07 19:41:27 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/09 17:51:17 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,26 @@ typedef struct	s_render
 	int			color;
 }				t_render;
 
+typedef struct	s_image
+{
+	unsigned char	bitmap_type[2];
+	int				file_size;
+	short			reserved1;
+	short			reserved2;
+	unsigned int	offset_bits;
+	unsigned int	size_header;
+	unsigned int	width;
+	unsigned int	height;
+	short int		planes;
+	short int		bit_count;
+	unsigned int	compression;
+	unsigned int	image_size;
+	unsigned int	ppm_x;
+	unsigned int	ppm_y;
+	unsigned int	clr_used;
+	unsigned int	clr_important;
+}				t_image;
+
 typedef struct	s_data
 {
 	t_texture	txt;
@@ -156,6 +176,7 @@ typedef struct	s_data
 	t_dda		dda;
 	t_render	rndr;
 	t_parcing	parse;
+	t_image		image;
 	int			index;
 	int			*load_data;
 	void		*load_img;
@@ -205,4 +226,9 @@ int				was_hitvert(t_data *d);
 void			find_horizontall_wall(t_data *d);
 void			find_vertical_wall(t_data *d);
 void			render3dprojectedwalls(t_data *d, int i, int j);
+void	image_create(t_data *cube);
+void	image_header(t_image *image, int file);
+void	fill_data(t_image *image, t_data *d);
+void	image_put(t_data *d, t_image *image, int file);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 #endif

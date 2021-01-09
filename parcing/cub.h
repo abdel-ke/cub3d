@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:22:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/06 15:26:27 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/09 17:24:24 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct		s_parcing
 
 void				initial_color(t_parcing *p);
 void				initial(t_parcing *p);
-void				ft_parse(t_parcing *p, int ac, char **av);
+int					ft_parse(t_parcing *p, int ac, char **av, int check);
 void				ft_putchar(char *str);
 size_t				ft_strlen(const char *str);
 char				*ft_chr(const char *s, int c);
@@ -69,7 +69,7 @@ char				*ft_strjoin(char const *s1, char const *s2);
 void				*ft_calloc(size_t count, size_t size);
 void				ft_bzero(void *s, size_t n);
 char				*ft_strjoin_2(char *s, char *s1, char *s2);
-int					ft_error(char *str);
+int					ft_error(char *str, char *str2);
 void				ft_get_resol(t_parcing *p, char *line);
 void				ft_check_r(char *line);
 unsigned long long	ft_atoi2(const char *str);

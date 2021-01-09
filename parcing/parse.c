@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 14:28:15 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/07 19:14:44 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/09 17:24:12 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,22 @@ void	initial(t_parcing *p)
 	initial_color(p);
 }
 
-void	ft_parse(t_parcing *p, int ac, char **av)
+int		ft_parse(t_parcing *p, int ac, char **av, int check)
 {
 	int		fd;
 	char	*line;
 
 	initial(p);
 	if ((fd = open(av[1], O_RDONLY)) == -1 || ac < 1)
-		ft_putchar("check arguments\n");
-	while (get_next_line(fd, &line) > 0)
 	{
+		ft_putchar("ERROR\nCHECK ARG\n");
+		return (FALSE);
+	}
+	while (check)
+	{
+		check = get_next_line(fd, &line);
 		if (line[0] == ' ' && p->file_args != 8)
-		{
-			ft_putchar(line);
-			ft_error("\nARG INVALID");
-		}
+			ft_error("ARG INVALID\t", line);
 		else if (line[0] == 'R' && line[1] == ' ')
 			ft_get_resol(p, line + 2);
 		else if (ft_check_textures(line))
@@ -68,4 +69,5 @@ void	ft_parse(t_parcing *p, int ac, char **av)
 	}
 	ft_check_map(p);
 	map_out_line(p);
+	return (TRUE);
 }

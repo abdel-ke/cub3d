@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:07:31 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/06 15:36:18 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/09 17:18:55 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_check_r(char *line)
 	if (i != 2)
 	{
 		free(str);
-		ft_error("CHECK YOUR RESOLUTION\n");
+		ft_error("CHECK YOUR RESOLUTION\n", "");
 	}
 }
 
@@ -41,5 +41,5 @@ void	ft_get_resol(t_parcing *p, char *line)
 	p->p_w = p->p_w > 2560 ? 2560 : p->p_w;
 	p->p_h = p->p_h > 1440 ? 1440 : p->p_h;
 	if (p->p_w <= 0 || p->p_h <= 0)
-		ft_error("CHECK YOUR RESOLUTION");
+		ft_error("CHECK YOUR RESOLUTION", "");
 }

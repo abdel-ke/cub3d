@@ -1,8 +1,8 @@
-NAME = Cub3D
+NAME = cub3D
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 LDFLAGS =  -lmlx -framework OpenGL -framework AppKit
-SRC = 	main.c\
+SRC = 	cub3D.c\
 		map.c\
 		player.c\
 		raycaste.c\
@@ -11,6 +11,8 @@ SRC = 	main.c\
 		sprit.c\
 		keypress.c\
 		cast.c\
+		image_save.c\
+		ft_memcpy.c\
 		parcing/ft_atoi.c\
 		parcing/ft_color.c\
 		parcing/ft_error.c\
@@ -30,9 +32,6 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
-
-# %.o : %.c
-# 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
 	@rm -f $(OBJ)

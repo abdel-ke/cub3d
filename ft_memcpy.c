@@ -1,43 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/03 15:06:12 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/09 17:16:47 by abdel-ke         ###   ########.fr       */
+/*   Created: 2019/10/17 17:32:21 by ymarji            #+#    #+#             */
+/*   Updated: 2021/01/04 17:33:32 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "cube.h"
 
-void	ft_putchar(char *str)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	while (*str)
-		write(1, str++, 1);
-}
+	size_t	i;
+	char	*dst_str;
+	char	*src_str;
 
-int		ft_error(char *str, char *str2)
-{
-	ft_putchar("ERROR\n");
-	ft_putchar(str);
-	ft_putchar(str2);
-	ft_putchar("\n");
-	exit(0);
-}
 
-void	table_free(char **tab)
-{
-	int i;
-	int count;
-
-	count = countrow(tab);
+	dst_str = (char *)dst;
+	src_str = (char *)src;
 	i = 0;
-	while (i < count)
+	if (dst_str == NULL && src_str == NULL)
+		return (NULL);
+	while (n != 0)
 	{
-		free(tab[i]);
+		dst_str[i] = src_str[i];
 		i++;
+		--n;
 	}
-	free(tab);
+	return (dst);
 }
