@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 19:05:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/09 19:14:07 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/09 21:24:32 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	initial_player(t_data *d)
 	d->p.rot_spd = 2 * (M_PI / 180);
 	d->nbr_spr = 0;
 	d->r_cst.dist_ray = (int *)malloc(sizeof(d->r_cst.dist_ray) * d->parse.p_w);
+	d->p.walk_dir = 0;
+	d->p.st_side = 0;
+	d->p.turn_dir = 0;
 	find_player(d);
 }
 
