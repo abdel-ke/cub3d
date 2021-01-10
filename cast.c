@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:39:34 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/07 19:16:21 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/10 18:32:32 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	cast(t_data *d)
 	find_horizontall_wall(d);
 	find_vertical_wall(d);
 	calculate(d);
-	ddaa(d, d->r_cst.wallhit_x * MINI_MAP, d->r_cst.wallhit_y * MINI_MAP);
 }
 
 void	castallrays(t_data *d)
@@ -36,7 +35,6 @@ void	castallrays(t_data *d)
 		i++;
 	}
 	find_sprit(d);
-	mlx_put_image_to_window(d->mlx.mlx_ptr, d->mlx.win_ptr, d->load_img, 0, 0);
 }
 
 void	calculate(t_data *d)

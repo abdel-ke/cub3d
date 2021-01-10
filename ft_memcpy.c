@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 17:32:21 by ymarji            #+#    #+#             */
-/*   Updated: 2021/01/04 17:33:32 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/10 18:37:50 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	size_t	i;
 	char	*dst_str;
 	char	*src_str;
-
 
 	dst_str = (char *)dst;
 	src_str = (char *)src;

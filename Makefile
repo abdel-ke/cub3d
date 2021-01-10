@@ -11,7 +11,7 @@ SRC = 	cub3D.c\
 		sprit.c\
 		keypress.c\
 		cast.c\
-		image_save.c\
+		ft_save.c\
 		ft_memcpy.c\
 		parcing/ft_atoi.c\
 		parcing/ft_color.c\
@@ -32,6 +32,13 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
+test:
+	@make re
+	@./cub3D parcing/cub.cub
+save:
+	@make re
+	@rm -rf save.bmp
+	@./cub3D parcing/cub.cub --save
 
 clean:
 	@rm -f $(OBJ)

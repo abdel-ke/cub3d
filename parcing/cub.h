@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:22:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/09 17:24:24 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/10 18:18:01 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,14 @@ typedef struct		s_parcing
 	char	* west;
 	char	* s_path;
 	int		file_args;
+	int		handle;
 	t_color c[2];
 	t_map	map;
 }					t_parcing;
 
 void				initial_color(t_parcing *p);
 void				initial(t_parcing *p);
-int					ft_parse(t_parcing *p, int ac, char **av, int check);
+void				ft_parse(t_parcing *p, char **av, int check);
 void				ft_putchar(char *str);
 size_t				ft_strlen(const char *str);
 char				*ft_chr(const char *s, int c);

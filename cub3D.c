@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 19:05:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/09 21:24:32 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/10 18:31:25 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,29 +80,24 @@ int		main(int ac, char **av)
 {
 	t_data t;
 
-	// if (ac == 2)
-	{
-		if (ft_parse(&t.parse, ac, av, 1) == FALSE)
-			exit(0);
-		initial_player(&t);
-		t.mlx.mlx_ptr = mlx_init();
+	err_handler(ac, av, &t.parse);
+	initial_player(&t);
+	t.mlx.mlx_ptr = mlx_init();
+	if (t.parse.handle == 0)
 		t.mlx.win_ptr = mlx_new_window(t.mlx.mlx_ptr, t.parse.p_w, t.parse.p_h,
 		"Cub3d");
-		t.load_img = mlx_new_image(t.mlx.mlx_ptr, t.parse.p_w, t.parse.p_h);
-		t.load_data = (int *)mlx_get_data_addr(t.load_img, &t.txt[0].bits_per_pixel,
-		&t.txt[0].size_line, &t.txt[0].endian);
-		main_texture(&t);
-		draw(&t);
+	t.load_img = mlx_new_image(t.mlx.mlx_ptr, t.parse.p_w, t.parse.p_h);
+	t.load_data = (int *)mlx_get_data_addr(t.load_img, &t.mlx.bits_per_pixel,
+	&t.mlx.size_line, &t.mlx.endian);
+	main_texture(&t);
+	draw(&t);
+	if (t.parse.handle == 0)
+	{
 		mlx_hook(t.mlx.win_ptr, 2, (1L << 0), keypressed, &t);
 		mlx_hook(t.mlx.win_ptr, 3, (1L >> 0), keyrealease, &t);
 		mlx_hook(t.mlx.win_ptr, 17, (1L << 5), &close_win, &t);
 		mlx_loop_hook(t.mlx.mlx_ptr, draw, &t);
 		mlx_loop(t.mlx.mlx_ptr);
-	}
-	if (ac == 3)
-	{
-		draw(&t);
-		image_create(&t);
 	}
 	return (0);
 }

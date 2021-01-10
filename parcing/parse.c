@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 14:28:15 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/09 17:24:12 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/10 18:17:17 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,13 @@ void	initial(t_parcing *p)
 	initial_color(p);
 }
 
-int		ft_parse(t_parcing *p, int ac, char **av, int check)
+void	ft_parse(t_parcing *p, char **av, int check)
 {
 	int		fd;
 	char	*line;
 
 	initial(p);
-	if ((fd = open(av[1], O_RDONLY)) == -1 || ac < 1)
-	{
-		ft_putchar("ERROR\nCHECK ARG\n");
-		return (FALSE);
-	}
+	fd = open(av[1], O_RDONLY);
 	while (check)
 	{
 		check = get_next_line(fd, &line);
@@ -69,5 +65,4 @@ int		ft_parse(t_parcing *p, int ac, char **av, int check)
 	}
 	ft_check_map(p);
 	map_out_line(p);
-	return (TRUE);
 }
