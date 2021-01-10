@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:06:12 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/09 17:16:47 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/10 19:37:36 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		ft_error(char *str, char *str2)
 	ft_putchar(str);
 	ft_putchar(str2);
 	ft_putchar("\n");
+	free(str2);
 	exit(0);
 }
 

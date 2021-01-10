@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:16:26 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/09 17:18:26 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/10 19:39:27 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ void	check_comma(char *line, int count)
 			count++;
 	}
 	if (count != 2)
-	{
-		free(line);
 		ft_error("CHECK COLOR", "");
-	}
 }
 
 void	ft_check_atoi(char *line, int i)
@@ -65,6 +62,7 @@ void	ft_check_atoi(char *line, int i)
 		}
 		i++;
 	}
+	table_free(check);
 }
 
 void	ft_color(t_parcing *p, char *line, int c_f)

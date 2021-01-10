@@ -33,10 +33,10 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 test:
-	@make re
+	@make
 	@./cub3D parcing/cub.cub
 save:
-	@make re
+	@make
 	@rm -rf save.bmp
 	@./cub3D parcing/cub.cub --save
 

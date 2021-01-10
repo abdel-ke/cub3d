@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:00:06 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/09 17:21:07 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/10 19:32:46 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ char	*ft_get_texture(char *line, int n)
 	path[i] = '\0';
 	if (open(path, O_RDONLY) == -1 || path[i - 1] != 'm' ||
 	path[i - 2] != 'p' || path[i - 3] != 'x')
-	{
 		ft_error("PATH INVALID\t", path);
-		free(path);
-	}
 	return (path);
 }
 
