@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:22:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/11 12:20:02 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/11 19:15:03 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,33 @@
 
 typedef struct		s_color
 {
-	int	r;
-	int	g;
-	int	b;
-	int	color;
+	int				r;
+	int				g;
+	int				b;
+	int				color;
 }					t_color;
 
 typedef struct		s_map
 {
-	char	*str;
-	char	**map;
-	int		nbr_cols;
-	int		nbr_rows;
+	char			*str;
+	char			**map;
+	int				nbr_cols;
+	int				nbr_rows;
 }					t_map;
 
 typedef struct		s_parcing
 {
-	int		p_w;
-	int		p_h;
-	char	* south;
-	char	* north;
-	char	* east;
-	char	* west;
-	char	* s_path;
-	int		file_args;
-	int		handle;
-	t_color c[2];
-	t_map	map;
+	int				p_w;
+	int				p_h;
+	char			* south;
+	char			* north;
+	char			* east;
+	char			* west;
+	char			* s_path;
+	int				file_args;
+	int				handle;
+	t_color			c[2];
+	t_map			map;
 }					t_parcing;
 
 void				initial_color(t_parcing *p);
@@ -105,5 +105,9 @@ char				**ft_split(char const *s, char c);
 char				*ft_strtrim(char const *s1, char const *set);
 int					check(char c, char *set);
 void				ft_check_atoi(char *line, int i);
-void 				ft_free2(t_parcing *p);
+
+void				err_handler(int ac, char **av, t_parcing *p);
+int					c_split(char const *str, char c);
+int					ft_strcmp(const char *s1, const char *s2);
+void				*ft_memcpy(void *dst, const void *src, size_t n);
 #endif

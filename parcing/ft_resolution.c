@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:07:31 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/10 19:28:51 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/11 19:30:17 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,21 @@
 void	ft_check_r(char *line)
 {
 	char	**str;
+	char	*tmp;
 	int		i;
 
 	i = 0;
-	str = ft_split(ft_strtrim(line, " "), ' ');
-	while (*str++)
+	tmp = ft_strtrim(line, " ");
+	str = ft_split(tmp, ' ');
+	free(tmp);
+	while (str[i])
 		i++;
 	if (i != 2)
 	{
-		free(str);
+		table_free(str);
 		ft_error("CHECK YOUR RESOLUTION\n", "");
 	}
+	table_free(str);
 }
 
 void	ft_get_resol(t_parcing *p, char *line)

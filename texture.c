@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 19:54:07 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/07 19:22:51 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/11 19:34:33 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	main_texture(t_data *d)
 	&d->spr->width, &d->spr->height1);
 	d->spr->data_spr = (int *)mlx_get_data_addr(d->spr->img_spr,
 	&d->spr->bits_per_pixel, &d->spr->size_line, &d->spr->endian);
+	ft_free2(d);
 }
 
 int		is_text_up_down(t_data *d)

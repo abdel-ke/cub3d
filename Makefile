@@ -2,7 +2,7 @@ NAME = cub3D
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 LDFLAGS =  -lmlx -framework OpenGL -framework AppKit
-SRC = 	cub3D.c\
+SRC = 	cub3d.c\
 		map.c\
 		player.c\
 		raycaste.c\
@@ -34,12 +34,11 @@ $(NAME): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 test:
 	@make
-	@./cub3D parcing/cub.cub
+	@./cub3D parcing/map.cub
 save:
 	@make
 	@rm -rf save.bmp
 	@./cub3D parcing/cub.cub --save
-
 clean:
 	@rm -f $(OBJ)
 

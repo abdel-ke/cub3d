@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 19:24:51 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/10 18:28:42 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/11 19:36:11 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@
 # include <mlx.h>
 # include "parcing/cub.h"
 # define TILE_SIZE 64
-# define MAP_NUM_ROWS 11
-# define MAP_NUM_COLS 15
-# define UP_KEY 126
-# define DOWN_KEY 125
 # define RIGHT_KEY 124
 # define LEFT_KEY 123
 # define W_KEY 13
@@ -35,7 +31,6 @@
 # define W 2
 # define E 3
 # define FOV_ANGLE 1.0471975512
-# define NUM_RAYS 1440
 # define MINI_MAP 0.1
 
 typedef struct	s_mlx
@@ -146,11 +141,6 @@ typedef struct	s_render
 	int			color;
 }				t_render;
 
-typedef struct	s_image
-{
-	
-}				t_image;
-
 typedef struct	s_data
 {
 	t_texture	txt;
@@ -161,7 +151,6 @@ typedef struct	s_data
 	t_dda		dda;
 	t_render	rndr;
 	t_parcing	parse;
-	t_image		image;
 	int			index;
 	int			*load_data;
 	void		*load_img;
@@ -207,7 +196,8 @@ int				was_hitvert(t_data *d);
 void			find_horizontall_wall(t_data *d);
 void			find_vertical_wall(t_data *d);
 void			render3dprojectedwalls(t_data *d, int i, int j);
-void	err_handler(int ac, char **av, t_parcing *p);
+void			err_handler(int ac, char **av, t_parcing *p);
 void			ft_save(t_data *d);
 int				ft_check_save(char *str);
+void			ft_free2(t_data *p);
 #endif

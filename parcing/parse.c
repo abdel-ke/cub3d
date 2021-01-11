@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 14:28:15 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/11 12:25:54 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/11 19:31:38 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,7 @@ void	ft_parse(t_parcing *p, char **av, int check)
 	{
 		check = get_next_line(fd, &line);
 		if (line[0] == ' ' && p->file_args != 8)
-		{
 			ft_error("ARG INVALID\t", line);
-			free(line);
-			free(p->map.str);
-		}
 		else if (line[0] == 'R' && line[1] == ' ')
 			ft_get_resol(p, line + 2);
 		else if (ft_check_textures(line))
@@ -70,5 +66,4 @@ void	ft_parse(t_parcing *p, char **av, int check)
 	}
 	ft_check_map(p);
 	map_out_line(p);
-	// ft_free2(p);
 }

@@ -6,11 +6,27 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 19:15:48 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/10 18:19:13 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/11 19:34:17 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+void	ft_free2(t_data *d)
+{
+	if (d->parse.south != NULL)
+		free(d->parse.south);
+	if (d->parse.north != NULL)
+		free(d->parse.north);
+	if (d->parse.east != NULL)
+		free(d->parse.east);
+	if (d->parse.west != NULL)
+		free(d->parse.west);
+	if (d->parse.s_path != NULL)
+		free(d->parse.s_path);
+	if (d->parse.map.str != NULL)
+		free(d->parse.map.str);
+}
 
 int		ft_strcmp(const char *s1, const char *s2)
 {

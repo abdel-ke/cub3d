@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:39:34 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/10 18:32:32 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/11 17:51:57 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	castallrays(t_data *d)
 
 	i = 0;
 	d->r_cst.rayangle = d->p.rot_an - (FOV_ANGLE / 2);
+	d->r_cst.dist_ray = (int *)malloc(sizeof(d->r_cst.dist_ray) * d->parse.p_w);
 	while (i < d->parse.p_w)
 	{
 		cast(d);
@@ -35,6 +36,7 @@ void	castallrays(t_data *d)
 		i++;
 	}
 	find_sprit(d);
+	free(d->r_cst.dist_ray);
 }
 
 void	calculate(t_data *d)
