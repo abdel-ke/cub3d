@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 14:28:15 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/10 19:26:44 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/11 12:25:54 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ void	ft_parse(t_parcing *p, char **av, int check)
 	}
 	ft_check_map(p);
 	map_out_line(p);
+	// ft_free2(p);
 }

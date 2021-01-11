@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:22:38 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/10 18:18:01 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/11 12:20:02 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,5 @@ char				**ft_split(char const *s, char c);
 char				*ft_strtrim(char const *s1, char const *set);
 int					check(char c, char *set);
 void				ft_check_atoi(char *line, int i);
-
+void 				ft_free2(t_parcing *p);
 #endif
