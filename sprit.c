@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:38:26 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/10 18:10:38 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/11 11:05:07 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ void	drow_strips(t_data *t, int s_x, int i, int x)
 void	drowsprite(t_data *cube, int i)
 {
 	int x;
-	int y;
 
-	y = 0;
 	x = 0;
 	cube->spr->height = (TILE_SIZE /
 	cube->spr[i].dist_x) * cube->r_cst.distbprojectplane;
