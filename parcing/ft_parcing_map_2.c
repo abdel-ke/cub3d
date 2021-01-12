@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:20:48 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/11 19:29:48 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/12 18:12:26 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		map_is_last(t_parcing *p)
 {
 	if (p->p_w == -404 || p->p_h == -404 || p->s_path == NULL ||
 	p->west == NULL || p->south == NULL || p->north == NULL
-	|| p->east == NULL || !ft_check_color(p))
+	|| p->east == NULL || p->file_args != 8)
 		return (TRUE);
 	return (FALSE);
 }

@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 15:16:26 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/10 19:39:27 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/12 18:11:47 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_check_atoi(char *line, int i)
 		{
 			if (check[i][start] < '0' || check[i][start] > '9')
 			{
-				free(check);
+				table_free(check);
 				ft_error("CHECK THE COLOR", "");
 			}
 			start++;
@@ -68,7 +68,8 @@ void	ft_check_atoi(char *line, int i)
 void	ft_color(t_parcing *p, char *line, int c_f)
 {
 	ft_check_atoi(line, 0);
-	p->file_args++;
+	if (c_f == F || c_f == C)
+		p->file_args++;
 	while (*line == ' ')
 		line++;
 	p->c[c_f].r = ft_atoi(line);

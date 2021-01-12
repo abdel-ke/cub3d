@@ -34,7 +34,7 @@ $(NAME): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 test:
 	@make
-	@./cub3D parcing/map.cub
+	@./cub3D parcing/cub.cub
 save:
 	@make
 	@rm -rf save.bmp

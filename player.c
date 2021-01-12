@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 09:58:25 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/07 19:20:27 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/12 18:07:05 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		iswallat(t_data *d, int x, int y)
 
 void	put_player(t_data *d, int i, int j, double rotation)
 {
+	d->multiplayer++;
 	d->p.rot_an = rotation;
 	d->p.pl_y = i * TILE_SIZE + TILE_SIZE / 2;
 	d->p.pl_x = j * TILE_SIZE + TILE_SIZE / 2;

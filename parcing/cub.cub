@@ -1,9 +1,9 @@
 R 1920 1080
 NO ./parcing/textures/NO.xpm
 SO ./parcing/textures/SO.xpm
+S ./parcing/textures/mushroom.xpm
 WE ./parcing/textures/WE.xpm
 EA ./parcing/textures/EA.xpm
-S ./parcing/textures/mushroom.xpm
 F 220,100,0
 C 224,30,0
 
@@ -18,7 +18,9 @@ C 224,30,0
 111111000111111  
 100000000000001  
 111111010111111  
-1000000000000011 
+1000000000000011
+
+
 12000000000021101
 1102000200111111 
 11111000000001   

@@ -3,11 +3,11 @@ NO ./parcing/textures/NO.xpm
 SO ./parcing/textures/SO.xpm
 EA ./parcing/textures/EA.xpm
 R 1080 0920
+S ./parcing/textures/mushroom.xpm
 WE ./parcing/textures/WE.xpm
 
-S ./parcing/textures/mushroom.xpm
-
 C 135, 245, 100
+
 F 204,245, 150
 
 

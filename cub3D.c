@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.c                                            :+:      :+:    :+:   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 19:33:41 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/11 19:33:42 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/12 18:04:37 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	init_ray(t_data *d)
 	d->r_cst.nextverttouchy = 0;
 	d->r_cst.vertwallhit_x = 0;
 	d->r_cst.vertwallhit_y = 0;
+	d->multiplayer = 0;
 }
 
 int		keypressed(int key, t_data *d)

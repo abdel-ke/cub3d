@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 19:24:51 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/11 19:36:11 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/12 18:02:14 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ typedef struct	s_data
 	int			win_h;
 	int			win_w;
 	double		num_rays;
+	int			multiplayer;
 }				t_data;
 
 void			initial_player(t_data *t);

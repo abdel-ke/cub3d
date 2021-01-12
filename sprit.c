@@ -6,7 +6,7 @@
 /*   By: abdel-ke <abdel-ke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:38:26 by abdel-ke          #+#    #+#             */
-/*   Updated: 2021/01/11 11:05:07 by abdel-ke         ###   ########.fr       */
+/*   Updated: 2021/01/12 18:13:05 by abdel-ke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,44 +41,44 @@ void	drow_strips(t_data *t, int s_x, int i, int x)
 	}
 }
 
-void	drowsprite(t_data *cube, int i)
+void	drowsprite(t_data *d, int i)
 {
 	int x;
 
 	x = 0;
-	cube->spr->height = (TILE_SIZE /
-	cube->spr[i].dist_x) * cube->r_cst.distbprojectplane;
-	cube->spr->end = (cube->parse.p_h / 2) + (cube->spr->height / 2);
-	cube->spr->x_star_wind = (tan((FOV_ANGLE) / 2)
-	* cube->r_cst.distbprojectplane) + (tan(cube->spr[i].spr_angle
-	- cube->p.rot_an) * cube->r_cst.distbprojectplane)
-	- (cube->spr->height / 2);
-	while (x < cube->spr->height)
+	d->spr->height = (TILE_SIZE /
+	d->spr[i].dist_x) * d->r_cst.distbprojectplane;
+	d->spr->end = (d->parse.p_h / 2) + (d->spr->height / 2);
+	d->spr->x_star_wind = (tan((FOV_ANGLE) / 2)
+	* d->r_cst.distbprojectplane) + (tan(d->spr[i].spr_angle
+	- d->p.rot_an) * d->r_cst.distbprojectplane)
+	- (d->spr->height / 2);
+	while (x < d->spr->height)
 	{
-		if (cube->spr->x_star_wind >= 0 &&
-		cube->spr->x_star_wind < cube->parse.p_w)
-			drow_strips(cube, cube->spr->x_star_wind, i, x);
+		if (d->spr->x_star_wind >= 0 &&
+		d->spr->x_star_wind < d->parse.p_w)
+			drow_strips(d, d->spr->x_star_wind, i, x);
 		x++;
-		cube->spr->x_star_wind++;
+		d->spr->x_star_wind++;
 	}
 }
 
-void	draw_sprite(t_data *cube, int count)
+void	draw_sprite(t_data *d, int count)
 {
 	int i;
 
 	i = 0;
-	cube->p.rot_an = normalizeangle(cube->p.rot_an);
+	d->p.rot_an = normalizeangle(d->p.rot_an);
 	while (i < count)
 	{
-		found_spr_angle(cube, i);
-		if (sprite_visible(cube, i) == 1)
-			drowsprite(cube, i);
+		found_spr_angle(d, i);
+		if (sprite_visible(d, i) == 1)
+			drowsprite(d, i);
 		i++;
 	}
 }
 
-void	stock_pos_spr(t_data *t)
+void	stock_pos_spr(t_data *d)
 {
 	int i;
 	int j;
@@ -86,16 +86,18 @@ void	stock_pos_spr(t_data *t)
 
 	count = 0;
 	i = 0;
-	t->spr = malloc(sizeof(t_sprite) * t->nbr_spr);
-	while (i < t->parse.map.nbr_rows)
+	if (d->multiplayer != 1)
+		ft_error("MULTIPLAYER", "");
+	d->spr = malloc(sizeof(t_sprite) * d->nbr_spr);
+	while (i < d->parse.map.nbr_rows)
 	{
 		j = 0;
-		while (j < t->parse.map.nbr_cols)
+		while (j < d->parse.map.nbr_cols)
 		{
-			if (t->parse.map.map[i][j] == '2')
+			if (d->parse.map.map[i][j] == '2')
 			{
-				t->spr[count].spr_x = (TILE_SIZE * j) + TILE_SIZE / 2;
-				t->spr[count].spr_y = (TILE_SIZE * i) + TILE_SIZE / 2;
+				d->spr[count].spr_x = (TILE_SIZE * j) + TILE_SIZE / 2;
+				d->spr[count].spr_y = (TILE_SIZE * i) + TILE_SIZE / 2;
 				count++;
 			}
 			j++;
@@ -104,19 +106,19 @@ void	stock_pos_spr(t_data *t)
 	}
 }
 
-void	find_sprit(t_data *cube)
+void	find_sprit(t_data *d)
 {
 	int count;
 
 	count = 0;
-	while (count < cube->nbr_spr)
+	while (count < d->nbr_spr)
 	{
-		cube->spr[count].dist_x =
-		distbetweenpoints(cube->spr[count].spr_x,
-		cube->spr[count].spr_y, cube->p.pl_x,
-		cube->p.pl_y);
+		d->spr[count].dist_x =
+		distbetweenpoints(d->spr[count].spr_x,
+		d->spr[count].spr_y, d->p.pl_x,
+		d->p.pl_y);
 		count++;
 	}
-	ft_sort_sprite(cube, 0, 0, count);
-	draw_sprite(cube, count);
+	ft_sort_sprite(d, 0, 0, count);
+	draw_sprite(d, count);
 }
